@@ -27,7 +27,7 @@ function CheckoutPage() {
             setCartItems(response.data);
 
         }
-        catch(error) {
+        catch (error) {
 
             console.log(error);
         }
@@ -44,16 +44,39 @@ function CheckoutPage() {
     );
 
     // PLACE ORDER
-    const placeOrder = () => {
+    const placeOrder = async () => {
 
-        if(address === "") {
+        if (address === "") {
 
             alert("Please Enter Address");
 
             return;
         }
 
-        alert("Order Placed Successfully 🎉");
+        try {
+
+            await axios.post(
+
+                "http://localhost:8080/api/orders",
+
+                {
+                    customerName: "Radhika",
+
+                    address: address,
+
+                    totalAmount: totalPrice,
+
+                    paymentMethod: "Cash On Delivery"
+                }
+            );
+
+            alert("Order Placed Successfully 🎉");
+
+        }
+        catch (error) {
+
+            console.log(error);
+        }
     };
 
     return (
@@ -126,6 +149,7 @@ function CheckoutPage() {
                                 type="radio"
 
                                 checked
+                                readOnly
                             />
 
                             <label

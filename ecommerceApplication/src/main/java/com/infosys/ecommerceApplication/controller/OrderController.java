@@ -2,7 +2,7 @@ package com.infosys.ecommerceApplication.controller;
 
 import com.infosys.ecommerceApplication.entity.Order;
 
-import com.infosys.ecommerceApplication.repository.OrderRepository;
+import com.infosys.ecommerceApplication.service.OrderService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -18,21 +18,14 @@ import java.util.List;
 public class OrderController {
 
     @Autowired
-    private OrderRepository orderRepository;
+    private OrderService orderService;
 
-    // PLACE ORDER
+    // CHECK OUT
     @PostMapping
     public Order placeOrder(
 
             @RequestBody Order order) {
 
-        return orderRepository.save(order);
-    }
-
-    // GET ALL ORDERS
-    @GetMapping
-    public List<Order> getOrders() {
-
-        return orderRepository.findAll();
+        return orderService.placeOrder(order);
     }
 }

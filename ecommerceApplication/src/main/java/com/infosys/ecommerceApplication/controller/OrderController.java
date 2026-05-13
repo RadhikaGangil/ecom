@@ -2,7 +2,7 @@ package com.infosys.ecommerceApplication.controller;
 
 import com.infosys.ecommerceApplication.entity.Order;
 
-import com.infosys.ecommerceApplication.service.OrderService;
+import com.infosys.ecommerceApplication.repository.OrderRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -14,18 +14,26 @@ import java.util.List;
 
 @RequestMapping("/api/orders")
 
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:5173")
+
 public class OrderController {
 
     @Autowired
-    private OrderService orderService;
+    private OrderRepository orderRepository;
 
-    // CHECK OUT
+    // SAVE ORDER
     @PostMapping
     public Order placeOrder(
 
             @RequestBody Order order) {
 
-        return orderService.placeOrder(order);
+        return orderRepository.save(order);
+    }
+
+    // GET ORDERS
+    @GetMapping
+    public List<Order> getOrders() {
+
+        return orderRepository.findAll();
     }
 }

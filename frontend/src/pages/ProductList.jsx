@@ -1,226 +1,13 @@
-// import { useEffect, useState } from "react";
-
-// import axios from "axios";
-
-// import { useNavigate } from "react-router-dom";
-
-// function ProductList() {
-
-//     const navigate = useNavigate();
-
-//     const [products, setProducts] = useState([]);
-
-//     useEffect(() => {
-
-//         fetchProducts();
-
-//     }, []);
-
-//     // FETCH PRODUCTS
-//     const fetchProducts = async () => {
-
-//         try {
-
-//             const response = await axios.get(
-
-//                 "http://localhost:8080/api/products"
-//             );
-
-//             setProducts(response.data);
-
-//         }
-//         catch (error) {
-
-//             console.log(error);
-//         }
-//     };
-
-//     // ADD TO CART
-//     const addToCart = async (product) => {
-
-//         try {
-
-//             await axios.post(
-
-//                 "http://localhost:8080/api/cart",
-
-//                 {
-//                     productName: product.name,
-
-//                     price: product.price,
-
-//                     quantity: 1,
-
-//                     imageUrl: product.imageUrl
-//                 }
-//             );
-
-//             alert("Product Added To Cart 🛒");
-
-//         }
-//         catch (error) {
-
-//             console.log(error);
-//         }
-//     };
-
-//     return (
-
-//         <div className="container py-5">
-
-//             {/* TOP SECTION */}
-
-//             <div
-//                 className="d-flex justify-content-between align-items-center mb-5"
-//             >
-
-//                 <h1 className="fw-bold">
-
-//                     Trending Products 🔥
-
-//                 </h1>
-
-//                 {/* CART BUTTON */}
-
-//                 <button
-
-//                     className="btn btn-dark px-4 py-2"
-
-//                     onClick={() => navigate("/cart")}
-//                 >
-
-//                     Go To Cart 🛒
-
-//                 </button>
-
-//             </div>
-
-//             {/* PRODUCT ROW */}
-
-//             <div className="row">
-
-//                 {
-
-//                     products.map((product) => (
-
-//                         <div
-//                             className="col-md-4 mb-4"
-//                             key={product.id}
-//                         >
-
-//                             <div
-//                                 className="card shadow h-100 border-0"
-//                                 style={{
-//                                     borderRadius: "20px"
-//                                 }}
-//                             >
-
-//                                 {/* PRODUCT IMAGE */}
-
-//                                 <img
-
-//                                     src={product.imageUrl}
-
-//                                     className="card-img-top"
-
-//                                     alt={product.name}
-
-//                                     style={{
-
-//                                         height: "250px",
-
-//                                         objectFit: "cover",
-
-//                                         borderTopLeftRadius: "20px",
-
-//                                         borderTopRightRadius: "20px"
-//                                     }}
-//                                 />
-
-//                                 {/* CARD BODY */}
-
-//                                 <div className="card-body">
-
-//                                     <h4 className="fw-bold">
-
-//                                         {product.name}
-
-//                                     </h4>
-
-//                                     <p>
-
-//                                         {product.description}
-
-//                                     </p>
-
-//                                     <h3 className="text-success">
-
-//                                         ₹ {product.price}
-
-//                                     </h3>
-
-//                                     <p>
-
-//                                         Stock:
-//                                         {product.quantity}
-
-//                                     </p>
-
-//                                     {/* ADD TO CART BUTTON */}
-
-//                                     <button
-
-//                                         className="btn btn-success w-100 mb-2"
-
-//                                         onClick={() =>
-
-//                                             addToCart(product)
-//                                         }
-//                                     >
-
-//                                         Add To Cart 🛒
-
-//                                     </button>
-
-//                                     {/* VIEW DETAILS BUTTON */}
-
-//                                     <button
-
-//                                         className="btn btn-dark w-100"
-
-//                                         onClick={() =>
-
-//                                             navigate(
-
-//                                                 `/products/${product.id}`
-//                                             )
-//                                         }
-//                                     >
-
-//                                         View Details
-
-//                                     </button>
-
-//                                 </div>
-
-//                             </div>
-
-//                         </div>
-//                     ))
-//                 }
-
-//             </div>
-
-//         </div>
-//     );
-// }
-
-// export default ProductList;
 import { useEffect, useState } from "react";
 
 import axios from "axios";
 
 import { useNavigate } from "react-router-dom";
+
+import {
+    ShoppingCart,
+    Package
+} from "lucide-react";
 
 function ProductList() {
 
@@ -228,9 +15,9 @@ function ProductList() {
 
     const [products, setProducts] = useState([]);
 
-    const [filteredProducts, setFilteredProducts] = useState([]);
-
     const [search, setSearch] = useState("");
+
+    const [filteredProducts, setFilteredProducts] = useState([]);
 
     useEffect(() => {
 
@@ -259,7 +46,7 @@ function ProductList() {
         }
     };
 
-    // SEARCH PRODUCT
+    // SEARCH PRODUCTS
     const handleSearch = (value) => {
 
         setSearch(value);
@@ -270,41 +57,10 @@ function ProductList() {
 
                 .toLowerCase()
 
-                .includes(
-
-                    value.toLowerCase()
-                )
+                .includes(value.toLowerCase())
         );
 
         setFilteredProducts(filtered);
-    };
-
-    // FILTER BY PRICE
-    const filterByPrice = (type) => {
-
-        if (type === "low") {
-
-            const sorted = [...filteredProducts]
-
-                .sort((a, b) =>
-
-                    a.price - b.price
-                );
-
-            setFilteredProducts(sorted);
-        }
-
-        if (type === "high") {
-
-            const sorted = [...filteredProducts]
-
-                .sort((a, b) =>
-
-                    b.price - a.price
-                );
-
-            setFilteredProducts(sorted);
-        }
     };
 
     // ADD TO CART
@@ -327,7 +83,7 @@ function ProductList() {
                 }
             );
 
-            alert("Product Added To Cart 🛒");
+            alert("Added To Cart 🛒");
 
         }
         catch (error) {
@@ -338,210 +94,256 @@ function ProductList() {
 
     return (
 
-        <div className="container py-5">
+        <div
+            className="min-vh-100 py-5"
+            style={{
+                background: "#f5f5f5"
+            }}
+        >
 
-            {/* TOP SECTION */}
+            <div className="container">
 
-            <div
-                className="d-flex justify-content-between align-items-center mb-5"
-            >
+                {/* TOP SECTION */}
 
-                <h1 className="fw-bold">
-
-                    Trending Products 🔥
-
-                </h1>
-
-                {/* CART BUTTON */}
-
-                <button
-
-                    className="btn btn-dark px-4 py-2"
-
-                    onClick={() => navigate("/cart")}
+                <div
+                    className="d-flex justify-content-between align-items-center mb-5"
                 >
 
-                    Go To Cart 🛒
-
-                </button>
-
-            </div>
-
-            {/* SEARCH + FILTER */}
-
-            <div
-                className="row mb-5"
-            >
-
-                <div className="col-md-8">
-
-                    <input
-
-                        type="text"
-
-                        placeholder="Search Products..."
-
-                        className="form-control p-3"
-
-                        value={search}
-
-                        onChange={(e) =>
-
-                            handleSearch(e.target.value)
-                        }
-                    />
-
-                </div>
-
-                <div className="col-md-4">
-
-                    <select
-
-                        className="form-select p-3"
-
-                        onChange={(e) =>
-
-                            filterByPrice(e.target.value)
-                        }
+                    <h1
+                        className="fw-bold"
+                        style={{
+                            fontSize: "50px"
+                        }}
                     >
 
-                        <option>
+                        Trending Products 🔥
 
-                            Filter By Price
+                    </h1>
 
-                        </option>
+                    <div
+                        className="d-flex gap-3"
+                    >
 
-                        <option value="low">
+                        {/* CART BUTTON */}
 
-                            Low To High
+                        <button
 
-                        </option>
+                            className="btn btn-dark px-4 py-2 rounded-pill"
 
-                        <option value="high">
+                            onClick={() => navigate("/cart")}
+                        >
 
-                            High To Low
+                            <ShoppingCart
+                                size={20}
+                                className="me-2"
+                            />
 
-                        </option>
+                            Cart
 
-                    </select>
+                        </button>
+
+                        {/* ORDERS BUTTON */}
+
+                        <button
+
+                            className="btn btn-success px-4 py-2 rounded-pill"
+
+                            onClick={() => navigate("/orders")}
+                        >
+
+                            <Package
+                                size={20}
+                                className="me-2"
+                            />
+
+                            Orders
+
+                        </button>
+
+                    </div>
 
                 </div>
 
-            </div>
+                {/* SEARCH BAR */}
 
-            {/* PRODUCT ROW */}
+                <div className="row mb-5">
 
-            <div className="row">
+                    <div className="col-md-6 mx-auto">
 
-                {
+                        <input
 
-                    filteredProducts.map((product) => (
+                            type="text"
 
-                        <div
-                            className="col-md-4 mb-4"
-                            key={product.id}
-                        >
+                            placeholder="Search Products..."
 
-                            <div
-                                className="card shadow h-100 border-0"
-                                style={{
-                                    borderRadius: "20px"
-                                }}
-                            >
+                            className="form-control p-3 shadow-sm"
 
-                                {/* PRODUCT IMAGE */}
+                            style={{
+                                borderRadius: "15px"
+                            }}
 
-                                <img
+                            value={search}
 
-                                    src={product.imageUrl}
+                            onChange={(e) =>
 
-                                    className="card-img-top"
+                                handleSearch(e.target.value)
+                            }
+                        />
 
-                                    alt={product.name}
+                    </div>
 
-                                    style={{
+                </div>
 
-                                        height: "250px",
+                {/* PRODUCTS */}
 
-                                        objectFit: "cover",
+                <div className="row">
 
-                                        borderTopLeftRadius: "20px",
+                    {
 
-                                        borderTopRightRadius: "20px"
-                                    }}
-                                />
+                        filteredProducts.length === 0
 
-                                {/* CARD BODY */}
+                            ?
 
-                                <div className="card-body">
+                            (
 
-                                    <h4 className="fw-bold">
+                                <h2
+                                    className="text-center"
+                                >
 
-                                        {product.name}
+                                    No Products Found 😢
 
-                                    </h4>
+                                </h2>
+                            )
 
-                                    <p>
+                            :
 
-                                        {product.description}
+                            (
 
-                                    </p>
+                                filteredProducts.map((product) => (
 
-                                    <h3 className="text-success">
-
-                                        ₹ {product.price}
-
-                                    </h3>
-
-                                    <p>
-
-                                        Stock:
-                                        {product.quantity}
-
-                                    </p>
-
-                                    {/* ADD TO CART BUTTON */}
-
-                                    <button
-
-                                        className="btn btn-success w-100 mb-2"
-
-                                        onClick={() =>
-
-                                            addToCart(product)
-                                        }
+                                    <div
+                                        className="col-md-4 mb-4"
+                                        key={product.id}
                                     >
 
-                                        Add To Cart 🛒
+                                        <div
+                                            className="card border-0 shadow-lg h-100"
+                                            style={{
+                                                borderRadius: "25px"
+                                            }}
+                                        >
 
-                                    </button>
+                                            {/* IMAGE */}
 
-                                    {/* VIEW DETAILS BUTTON */}
+                                            <img
 
-                                    <button
+                                                src={product.imageUrl}
 
-                                        className="btn btn-dark w-100"
+                                                alt={product.name}
 
-                                        onClick={() =>
+                                                className="card-img-top"
 
-                                            navigate(
+                                                style={{
 
-                                                `/products/${product.id}`
-                                            )
-                                        }
-                                    >
+                                                    height: "300px",
 
-                                        View Details
+                                                    objectFit: "cover",
 
-                                    </button>
+                                                    borderTopLeftRadius: "25px",
 
-                                </div>
+                                                    borderTopRightRadius: "25px"
+                                                }}
+                                            />
 
-                            </div>
+                                            {/* BODY */}
 
-                        </div>
-                    ))
-                }
+                                            <div className="card-body p-4">
+
+                                                <h2
+                                                    className="fw-bold"
+                                                >
+
+                                                    {product.name}
+
+                                                </h2>
+
+                                                <p
+                                                    className="text-muted"
+                                                >
+
+                                                    {product.description}
+
+                                                </p>
+
+                                                <h3
+                                                    className="text-success fw-bold"
+                                                >
+
+                                                    ₹ {product.price}
+
+                                                </h3>
+
+                                                <p>
+
+                                                    Stock:
+                                                    {" "}
+                                                    {product.quantity}
+
+                                                </p>
+
+                                                {/* BUTTONS */}
+
+                                                <div
+                                                    className="d-flex gap-2 mt-4"
+                                                >
+
+                                                    {/* VIEW DETAILS */}
+
+                                                    <button
+
+                                                        className="btn btn-outline-dark w-50 rounded-pill"
+
+                                                        onClick={() =>
+
+                                                            navigate(
+
+                                                                `/products/${product.id}`
+                                                            )
+                                                        }
+                                                    >
+
+                                                        View
+
+                                                    </button>
+
+                                                    {/* ADD TO CART */}
+
+                                                    <button
+
+                                                        className="btn btn-dark w-50 rounded-pill"
+
+                                                        onClick={() =>
+
+                                                            addToCart(product)
+                                                        }
+                                                    >
+
+                                                        Add To Cart
+
+                                                    </button>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                ))
+                            )
+                    }
+
+                </div>
 
             </div>
 

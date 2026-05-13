@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 
 import axios from "axios";
 
+import { useNavigate } from "react-router-dom";
+
 function CheckoutPage() {
+
+    const navigate = useNavigate();
 
     const [cartItems, setCartItems] = useState([]);
 
@@ -46,6 +50,7 @@ function CheckoutPage() {
     // PLACE ORDER
     const placeOrder = async () => {
 
+        // VALIDATION
         if (address === "") {
 
             alert("Please Enter Address");
@@ -55,7 +60,8 @@ function CheckoutPage() {
 
         try {
 
-            await axios.post(
+            // API CALL
+            const response = await axios.post(
 
                 "http://localhost:8080/api/orders",
 
@@ -70,12 +76,25 @@ function CheckoutPage() {
                 }
             );
 
+            console.log(response.data);
+
             alert("Order Placed Successfully 🎉");
+
+            // CLEAR ADDRESS
+            setAddress("");
+
+            // REFRESH CART
+            fetchCartItems();
+
+            // NAVIGATE TO ORDERS PAGE
+            navigate("/orders");
 
         }
         catch (error) {
 
-            console.log(error);
+            console.log(error.response);
+
+            alert("Checkout Failed ❌");
         }
     };
 
@@ -157,6 +176,7 @@ function CheckoutPage() {
                             >
 
                                 Cash On Delivery
+
                             </label>
 
                         </div>
@@ -177,6 +197,7 @@ function CheckoutPage() {
                             >
 
                                 UPI / Card Payment
+
                             </label>
 
                         </div>
@@ -216,11 +237,13 @@ function CheckoutPage() {
                                     <p>
 
                                         {item.productName}
+
                                     </p>
 
                                     <p>
 
                                         ₹ {item.price}
+
                                     </p>
 
                                 </div>

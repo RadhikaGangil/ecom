@@ -30,125 +30,136 @@ import java.util.List;
 @Configuration
 public class SecurityConfig {
 
-        @Autowired
-        private JwtFilter jwtFilter;
+    @Autowired
+    private JwtFilter jwtFilter;
 
-        // AUTHENTICATION MANAGER
-        @Bean
-        public AuthenticationManager authenticationManager(
+    // AUTHENTICATION MANAGER
+    @Bean
+    public AuthenticationManager authenticationManager(
 
-                        AuthenticationConfiguration config) throws Exception {
+            AuthenticationConfiguration config
+    ) throws Exception {
 
-                return config.getAuthenticationManager();
-        }
+        return config.getAuthenticationManager();
+    }
 
-        // PASSWORD ENCODER
-        @Bean
-        public org.springframework.security.crypto.password.PasswordEncoder passwordEncoder() {
+    // SECURITY FILTER CHAIN
+    @Bean
+    public SecurityFilterChain securityFilterChain(
 
-                return new org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder();
-        }
+            HttpSecurity http
+    ) throws Exception {
 
-        // SECURITY FILTER CHAIN
-        @Bean
-        public SecurityFilterChain securityFilterChain(
+        http
 
-                        HttpSecurity http) throws Exception {
+            // ENABLE CORS
+            .cors(cors -> {})
 
-                http
-                                .cors(cors -> {
-                                })
+            // DISABLE CSRF
+            .csrf(csrf -> csrf.disable())
 
-                                .csrf(csrf -> csrf.disable())
+            // SESSION MANAGEMENT
+            .sessionManagement(session ->
 
-                                .csrf(csrf -> csrf.disable())
+                session.sessionCreationPolicy(
 
-                                .sessionManagement(session ->
+                    SessionCreationPolicy.STATELESS
+                )
+            )
 
-                                session.sessionCreationPolicy(
+            // AUTHORIZE REQUESTS
+            .authorizeHttpRequests(auth ->
 
-                                                SessionCreationPolicy.STATELESS))
+                auth
 
-                                .authorizeHttpRequests(auth ->
+                    // AUTH APIs
+                    .requestMatchers(
 
-                                auth
+                        "/api/auth/**"
+                    )
 
-                                                // AUTH APIs
-                                                .requestMatchers(
+                    .permitAll()
 
-                                                                "/api/auth/**")
+                    // PRODUCT APIs
+                    .requestMatchers(
 
-                                                .permitAll()
+                        "/api/products/**"
+                    )
 
-                                                // PRODUCT APIs
-                                                .requestMatchers(
+                    .permitAll()
 
-                                                                "/api/products/**")
+                    // CART APIs
+                    .requestMatchers(
 
-                                                .permitAll()
+                        "/api/cart/**"
+                    )
 
-                                                // CART APIs
-                                                .requestMatchers(
+                    .permitAll()
 
-                                                                "/api/cart/**")
+                    // ORDER APIs
+                    .requestMatchers(
 
-                                                .permitAll()
+                        "/api/orders/**"
+                    )
 
-                                                // ORDER APIs
-                                                .requestMatchers(
+                    .permitAll()
 
-                                                                "/api/orders/**")
+                    // ANY OTHER REQUEST
+                    .anyRequest()
 
-                                                .permitAll()
+                    .authenticated()
+            )
 
-                                                // ANY OTHER
-                                                .anyRequest()
+            // JWT FILTER
+            .addFilterBefore(
 
-                                                .authenticated())
+                jwtFilter,
 
-                                .addFilterBefore(
+                UsernamePasswordAuthenticationFilter.class
+            );
 
-                                                jwtFilter,
+        return http.build();
+    }
 
-                                                UsernamePasswordAuthenticationFilter.class);
+    // CORS CONFIGURATION
+    @Bean
+    public CorsFilter corsFilter() {
 
-                return http.build();
-        }
+        CorsConfiguration configuration =
 
-        // CORS CONFIGURATION
-        @Bean
-        public CorsFilter corsFilter() {
+                new CorsConfiguration();
 
-                CorsConfiguration configuration =
+        configuration.setAllowCredentials(true);
 
-                                new CorsConfiguration();
+        configuration.setAllowedOrigins(
 
-                configuration.setAllowCredentials(true);
+                List.of(
 
-                configuration.setAllowedOrigins(
+                        "http://localhost:5173"
+                )
+        );
 
-                                List.of(
+        configuration.setAllowedHeaders(
 
-                                                "http://localhost:5173"));
+                List.of("*")
+        );
 
-                configuration.setAllowedHeaders(
+        configuration.setAllowedMethods(
 
-                                List.of("*"));
+                List.of("*")
+        );
 
-                configuration.setAllowedMethods(
+        UrlBasedCorsConfigurationSource source =
 
-                                List.of("*"));
+                new UrlBasedCorsConfigurationSource();
 
-                UrlBasedCorsConfigurationSource source =
+        source.registerCorsConfiguration(
 
-                                new UrlBasedCorsConfigurationSource();
+                "/**",
 
-                source.registerCorsConfiguration(
+                configuration
+        );
 
-                                "/**",
-
-                                configuration);
-
-                return new CorsFilter(source);
-        }
+        return new CorsFilter(source);
+    }
 }

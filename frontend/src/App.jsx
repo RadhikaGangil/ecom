@@ -20,6 +20,7 @@ import ProductDetail from "./pages/ProductDetail";
 
 import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
+import OrdersPage from "./pages/OrdersPage";
 
 import Admin from "./pages/Admin";
 
@@ -132,6 +133,19 @@ function App() {
             <ProtectedRoute>
 
               <CheckoutPage />
+
+            </ProtectedRoute>
+          }
+        />
+        <Route
+
+          path="/orders"
+
+          element={
+
+            <ProtectedRoute>
+
+              <OrdersPage />
 
             </ProtectedRoute>
           }

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import axios from "axios";
 
@@ -22,14 +22,8 @@ function Admin() {
 
     const [imageUrl, setImageUrl] = useState("");
 
-    useEffect(() => {
-
-        fetchProducts();
-
-    }, []);
-
     // FETCH PRODUCTS
-    const fetchProducts = async () => {
+    const fetchProducts = useCallback(async () => {
 
         try {
 
@@ -45,7 +39,13 @@ function Admin() {
 
             console.log(error);
         }
-    };
+    }, []);
+
+    useEffect(() => {
+
+        fetchProducts();
+
+    }, [fetchProducts]);
 
     // ADD PRODUCT
     const addProduct = async () => {

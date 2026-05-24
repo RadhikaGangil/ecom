@@ -1,21 +1,67 @@
 import { useNavigate } from "react-router-dom";
+import {
+    Search,
+    ShoppingCart,
+    User,
+    Package,
+    LogOut,
+    ArrowRight
+} from "lucide-react";
 
 function Home() {
 
     const navigate = useNavigate();
 
-    const handleLogout = () => {
+    const logout = () => {
 
-        localStorage.clear();
+        localStorage.removeItem("token");
 
-        navigate("/login");
+        window.location.href = "/login";
     };
+
+    const categories = [
+
+        {
+            name: "Fashion",
+
+            image:
+
+                "https://images.unsplash.com/photo-1445205170230-053b83016050"
+        },
+
+        {
+            name: "Electronics",
+
+            image:
+
+                "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9"
+        },
+
+        {
+            name: "Watches",
+
+            image:
+
+                "https://images.unsplash.com/photo-1523170335258-f5ed11844a49"
+        },
+
+        {
+            name: "Laptops",
+
+            image:
+
+                "https://images.unsplash.com/photo-1496181133206-80ce9b88a853"
+        }
+    ];
 
     return (
 
         <div
+
             style={{
-                backgroundColor: "#f3f3f3",
+
+                background: "#f8fafc",
+
                 minHeight: "100vh"
             }}
         >
@@ -23,44 +69,151 @@ function Home() {
             {/* NAVBAR */}
 
             <nav
-                className="navbar navbar-expand-lg px-4 py-3"
-                style={{
-                    backgroundColor: "#131921"
-                }}
+
+                className="navbar navbar-expand-lg bg-white shadow-sm px-4 py-3 sticky-top"
+
             >
 
                 <div className="container-fluid">
 
+                    {/* LOGO */}
+
                     <h2
+
+                        className="fw-bold mb-0"
+
                         style={{
-                            color: "white",
-                            fontWeight: "bold"
+
+                            color: "#111827",
+
+                            cursor: "pointer"
                         }}
+
+                        onClick={() =>
+                            navigate("/")
+                        }
                     >
 
-                        ShopEase 🛒
+                        ShopEase 🛍️
 
                     </h2>
 
-                    <div>
+                    {/* SEARCH */}
+
+                    <div
+
+                        className="d-none d-md-flex align-items-center mx-auto px-3"
+
+                        style={{
+
+                            width: "420px",
+
+                            height: "48px",
+
+                            background: "#f1f5f9",
+
+                            borderRadius: "14px"
+                        }}
+                    >
+
+                        <Search
+                            size={18}
+                            color="#64748b"
+                        />
+
+                        <input
+
+                            type="text"
+
+                            placeholder="Search products..."
+
+                            className="form-control border-0 bg-transparent shadow-none ms-2"
+                        />
+
+                    </div>
+
+                    {/* BUTTONS */}
+
+                    <div className="d-flex gap-2">
 
                         <button
 
-                            className="btn btn-warning fw-bold me-3"
+                            className="btn btn-light rounded-pill px-3"
 
-                            onClick={() => navigate("/products")}
+                            onClick={() =>
+                                navigate("/products")
+                            }
                         >
 
-                            Products
+                            Shop
 
                         </button>
 
                         <button
 
-                            className="btn btn-danger fw-bold"
+                            className="btn btn-light rounded-pill px-3"
 
-                            onClick={handleLogout}
+                            onClick={() =>
+                                navigate("/orders")
+                            }
                         >
+
+                            <Package
+                                size={18}
+                                className="me-1"
+                            />
+
+                            Orders
+
+                        </button>
+
+                        <button
+
+                            className="btn btn-light rounded-pill px-3"
+
+                            onClick={() =>
+                                navigate("/cart")
+                            }
+                        >
+
+                            <ShoppingCart
+                                size={18}
+                                className="me-1"
+                            />
+
+                            Cart
+
+                        </button>
+
+                        <button
+
+                            className="btn btn-light rounded-pill px-3"
+
+                            onClick={() =>
+                                navigate("/profile")
+                            }
+                        >
+
+                            <User
+                                size={18}
+                                className="me-1"
+                            />
+
+                            Profile
+
+                        </button>
+
+                        <button
+
+                            className="btn btn-dark rounded-pill px-3"
+
+                            onClick={logout}
+                        >
+
+                            <LogOut
+                                size={18}
+                                className="me-1"
+                            />
 
                             Logout
 
@@ -72,107 +225,337 @@ function Home() {
 
             </nav>
 
-            {/* HERO SECTION */}
-
-            <div
-                className="container-fluid text-white d-flex align-items-center"
-
-                style={{
-
-                    minHeight: "500px",
-
-                    backgroundImage:
-                        "url('https://images.unsplash.com/photo-1607082349566-187342175e2f?q=80&w=2070&auto=format&fit=crop')",
-
-                    backgroundSize: "cover",
-
-                    backgroundPosition: "center"
-                }}
-            >
-
-                <div className="container">
-
-                    <h1
-                        style={{
-                            fontSize: "70px",
-                            fontWeight: "bold",
-                            textShadow: "2px 2px 10px black"
-                        }}
-                    >
-
-                        Big Summer Sale 🔥
-
-                    </h1>
-
-                    <p
-                        style={{
-                            fontSize: "24px",
-                            maxWidth: "600px",
-                            textShadow: "2px 2px 10px black"
-                        }}
-                    >
-
-                        Discover trending products,
-                        amazing deals and premium
-                        shopping experience.
-
-                    </p>
-
-                    <button
-
-                        className="btn btn-warning btn-lg fw-bold mt-3 px-5"
-
-                        onClick={() => navigate("/products")}
-                    >
-
-                        Shop Now
-
-                    </button>
-
-                </div>
-
-            </div>
-
-            {/* CATEGORY SECTION */}
+            {/* HERO */}
 
             <div className="container py-5">
 
-                <h2 className="fw-bold mb-5 text-center">
+                <div
 
-                    Shop By Category
+                    className="row align-items-center rounded-5 p-5"
 
-                </h2>
+                    style={{
 
-                <div className="row g-4">
+                        background:
 
-                    {/* CATEGORY 1 */}
+                            "linear-gradient(135deg,#111827,#374151)",
 
-                    <div className="col-md-3">
+                        color: "white"
+                    }}
+                >
 
-                        <div
-                            className="card shadow border-0 h-100"
+                    <div className="col-lg-6">
+
+                        <h1
+
+                            className="fw-bold"
+
                             style={{
-                                borderRadius: "20px",
-                                overflow: "hidden"
+
+                                fontSize: "58px"
                             }}
                         >
 
-                            <img
-                                src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9"
-                                className="card-img-top"
-                                style={{
-                                    height: "250px",
-                                    objectFit: "cover"
-                                }}
+                            Shop Smart,
+                            Live Better ✨
+
+                        </h1>
+
+                        <p
+
+                            className="mt-4"
+
+                            style={{
+
+                                color: "#d1d5db",
+
+                                fontSize: "18px",
+
+                                lineHeight: "32px"
+                            }}
+                        >
+
+                            Discover fashion,
+                            gadgets and premium
+                            lifestyle products.
+
+                        </p>
+
+                        <button
+
+                            className="btn btn-light rounded-pill px-4 py-3 mt-3 fw-bold"
+
+                            onClick={() =>
+                                navigate("/products")
+                            }
+                        >
+
+                            Explore Products
+
+                            <ArrowRight
+                                size={18}
+                                className="ms-2"
                             />
 
-                            <div className="card-body text-center">
+                        </button>
 
-                                <h4 className="fw-bold">
+                    </div>
 
-                                    Mobiles
+                    <div className="col-lg-6 text-center">
 
-                                </h4>
+                        <img
+
+                            src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b"
+
+                            alt="hero"
+
+                            style={{
+
+                                width: "100%",
+
+                                maxWidth: "500px",
+
+                                borderRadius: "30px",
+
+                                objectFit: "cover",
+
+                                boxShadow:
+
+                                    "0 20px 50px rgba(0,0,0,0.25)"
+                            }}
+                        />
+
+                    </div>
+
+                </div>
+
+                {/* CATEGORIES */}
+
+                <div className="mt-5">
+
+                    <h3 className="fw-bold mb-4">
+
+                        Shop by Category
+
+                    </h3>
+
+                    <div className="row">
+
+                        {
+
+                            categories.map(
+
+                                (cat,index) => (
+
+                                    <div
+
+                                        className="col-md-3 mb-4"
+
+                                        key={index}
+                                    >
+
+                                        <div
+
+                                            className="card border-0 shadow-sm"
+
+                                            style={{
+
+                                                borderRadius: "25px",
+
+                                                overflow: "hidden",
+
+                                                cursor: "pointer"
+                                            }}
+                                        >
+
+                                            <img
+
+                                                src={cat.image}
+
+                                                alt={cat.name}
+
+                                                style={{
+
+                                                    height:"180px",
+
+                                                    width:"100%",
+
+                                                    objectFit:"cover"
+                                                }}
+                                            />
+
+                                            <div className="card-body text-center">
+
+                                                <h5 className="fw-bold">
+
+                                                    {cat.name}
+
+                                                </h5>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                )
+                            )
+                        }
+
+                    </div>
+
+                </div>
+                {/* FEATURED PRODUCTS */}
+
+                <div className="mt-5">
+
+                    <h3 className="fw-bold mb-4">
+
+                        Trending Products 🔥
+
+                    </h3>
+
+                    <div className="row">
+
+                        {
+
+                            [1,2,3,4].map((item) => (
+
+                                <div
+                                    className="col-lg-3 col-md-6 mb-4"
+                                    key={item}
+                                >
+
+                                    <div
+
+                                        className="card border-0 shadow-sm"
+
+                                        style={{
+
+                                            borderRadius: "25px",
+
+                                            overflow: "hidden",
+
+                                            transition: "0.3s"
+                                        }}
+                                    >
+
+                                        <img
+
+                                            src={`https://picsum.photos/400/300?random=${item}`}
+
+                                            alt="product"
+
+                                            style={{
+
+                                                height: "220px",
+
+                                                width:"100%",
+
+                                                objectFit: "cover"
+                                            }}
+                                        />
+
+                                        <div className="card-body">
+
+                                            <h5 className="fw-bold">
+
+                                                Premium Product
+
+                                            </h5>
+
+                                            <p className="text-muted">
+
+                                                Trending product
+                                                for modern lifestyle.
+
+                                            </p>
+
+                                            <h5 className="fw-bold">
+
+                                                ₹999
+
+                                            </h5>
+
+                                            <button
+
+                                                className="btn btn-dark w-100 rounded-pill mt-2"
+
+                                                onClick={() =>
+                                                    navigate("/products")
+                                                }
+                                            >
+
+                                                View Product
+
+                                            </button>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            ))
+                        }
+
+                    </div>
+
+                </div>
+
+                {/* OFFER BANNER */}
+
+                <div className="mt-5">
+
+                    <div
+
+                        className="rounded-5 p-5 text-white"
+
+                        style={{
+
+                            background:
+
+                                "linear-gradient(135deg,#7c3aed,#4f46e5)"
+                        }}
+                    >
+
+                        <div className="row align-items-center">
+
+                            <div className="col-lg-8">
+
+                                <h1 className="fw-bold">
+
+                                    Mega Sale 50% OFF 🎉
+
+                                </h1>
+
+                                <p
+                                    className="mt-3"
+                                    style={{
+                                        color:"#e0e7ff"
+                                    }}
+                                >
+
+                                    Limited deals on
+                                    fashion, electronics
+                                    and more.
+
+                                </p>
+
+                            </div>
+
+                            <div className="col-lg-4 text-lg-end">
+
+                                <button
+
+                                    className="btn btn-light rounded-pill px-4 py-3 fw-bold"
+
+                                    onClick={() =>
+                                        navigate("/products")
+                                    }
+                                >
+
+                                    Shop Now
+
+                                </button>
 
                             </div>
 
@@ -180,104 +563,102 @@ function Home() {
 
                     </div>
 
-                    {/* CATEGORY 2 */}
+                </div>
 
-                    <div className="col-md-3">
+                {/* WHY CHOOSE US */}
 
-                        <div
-                            className="card shadow border-0 h-100"
-                            style={{
-                                borderRadius: "20px",
-                                overflow: "hidden"
-                            }}
-                        >
+                <div className="mt-5">
 
-                            <img
-                                src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853"
-                                className="card-img-top"
+                    <h3 className="fw-bold text-center mb-5">
+
+                        Why Shop With Us
+
+                    </h3>
+
+                    <div className="row text-center">
+
+                        <div className="col-md-4 mb-4">
+
+                            <div
+
+                                className="card border-0 shadow-sm p-4"
+
                                 style={{
-                                    height: "250px",
-                                    objectFit: "cover"
+                                    borderRadius:"25px"
                                 }}
-                            />
+                            >
 
-                            <div className="card-body text-center">
+                                <h1>🚚</h1>
 
-                                <h4 className="fw-bold">
+                                <h5 className="fw-bold">
 
-                                    Laptops
+                                    Fast Delivery
 
-                                </h4>
+                                </h5>
+
+                                <p className="text-muted">
+
+                                    Quick and safe shipping.
+
+                                </p>
 
                             </div>
 
                         </div>
 
-                    </div>
+                        <div className="col-md-4 mb-4">
 
-                    {/* CATEGORY 3 */}
+                            <div
 
-                    <div className="col-md-3">
+                                className="card border-0 shadow-sm p-4"
 
-                        <div
-                            className="card shadow border-0 h-100"
-                            style={{
-                                borderRadius: "20px",
-                                overflow: "hidden"
-                            }}
-                        >
-
-                            <img
-                                src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e"
-                                className="card-img-top"
                                 style={{
-                                    height: "250px",
-                                    objectFit: "cover"
+                                    borderRadius:"25px"
                                 }}
-                            />
+                            >
 
-                            <div className="card-body text-center">
+                                <h1>🔒</h1>
 
-                                <h4 className="fw-bold">
+                                <h5 className="fw-bold">
 
-                                    Headphones
+                                    Secure Payments
 
-                                </h4>
+                                </h5>
+
+                                <p className="text-muted">
+
+                                    Trusted payment gateway.
+
+                                </p>
 
                             </div>
 
                         </div>
 
-                    </div>
+                        <div className="col-md-4 mb-4">
 
-                    {/* CATEGORY 4 */}
+                            <div
 
-                    <div className="col-md-3">
+                                className="card border-0 shadow-sm p-4"
 
-                        <div
-                            className="card shadow border-0 h-100"
-                            style={{
-                                borderRadius: "20px",
-                                overflow: "hidden"
-                            }}
-                        >
-
-                            <img
-                                src="https://images.unsplash.com/photo-1523275335684-37898b6baf30"
-                                className="card-img-top"
                                 style={{
-                                    height: "250px",
-                                    objectFit: "cover"
+                                    borderRadius:"25px"
                                 }}
-                            />
+                            >
 
-                            <div className="card-body text-center">
+                                <h1>⭐</h1>
 
-                                <h4 className="fw-bold">
+                                <h5 className="fw-bold">
 
-                                    Watches
+                                    Premium Quality
 
-                                </h4>
+                                </h5>
+
+                                <p className="text-muted">
+
+                                    Best curated products.
+
+                                </p>
 
                             </div>
 
@@ -288,6 +669,97 @@ function Home() {
                 </div>
 
             </div>
+
+            {/* FOOTER */}
+
+            <footer
+
+                className="text-white mt-5"
+
+                style={{
+                    background:"#111827"
+                }}
+            >
+
+                <div className="container py-5">
+
+                    <div className="row">
+
+                        <div className="col-md-4">
+
+                            <h4 className="fw-bold">
+
+                                ShopEase 🛍️
+
+                            </h4>
+
+                            <p
+                                style={{
+                                    color:"#9ca3af"
+                                }}
+                            >
+
+                                Modern ecommerce experience.
+
+                            </p>
+
+                        </div>
+
+                        <div className="col-md-4">
+
+                            <h5>
+
+                                Quick Links
+
+                            </h5>
+
+                            <p>Home</p>
+
+                            <p>Products</p>
+
+                            <p>Orders</p>
+
+                        </div>
+
+                        <div className="col-md-4">
+
+                            <h5>
+
+                                Contact
+
+                            </h5>
+
+                            <p>Email Support</p>
+
+                            <p>Help Center</p>
+
+                        </div>
+
+                    </div>
+
+                    <hr
+                        style={{
+                            borderColor:"#374151"
+                        }}
+                    />
+
+                    <p
+
+                        className="text-center mb-0"
+
+                        style={{
+                            color:"#9ca3af"
+                        }}
+                    >
+
+                        © 2026 ShopEase.
+                        All Rights Reserved.
+
+                    </p>
+
+                </div>
+
+            </footer>
 
         </div>
     );

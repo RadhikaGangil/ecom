@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import axios from "axios";
 
@@ -12,14 +12,8 @@ function CheckoutPage() {
 
     const [address, setAddress] = useState("");
 
-    useEffect(() => {
-
-        fetchCartItems();
-
-    }, []);
-
     // FETCH CART ITEMS
-    const fetchCartItems = async () => {
+    const fetchCartItems = useCallback(async () => {
 
         try {
 
@@ -35,7 +29,13 @@ function CheckoutPage() {
 
             console.log(error);
         }
-    };
+    }, []);
+
+    useEffect(() => {
+
+        fetchCartItems();
+
+    }, [fetchCartItems]);
 
     // TOTAL PRICE
     const totalPrice = cartItems.reduce(

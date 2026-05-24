@@ -23,6 +23,7 @@ import CheckoutPage from "./pages/CheckoutPage";
 import OrdersPage from "./pages/OrdersPage";
 
 import Admin from "./pages/Admin";
+import ProfilePage from "./pages/ProfilePage";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -137,6 +138,21 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+
+        <Route
+
+    path="/profile"
+
+    element={
+
+        <ProtectedRoute>
+
+            <ProfilePage />
+
+        </ProtectedRoute>
+    }
+/>
         <Route
 
           path="/orders"
@@ -150,6 +166,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+
 
         {/* ADMIN */}
 

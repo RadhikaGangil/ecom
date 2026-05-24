@@ -3,26 +3,19 @@ package com.infosys.ecommerceApplication.config;
 import com.infosys.ecommerceApplication.security.JwtFilter;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import org.springframework.security.authentication.AuthenticationManager;
-
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-
 import org.springframework.security.config.http.SessionCreationPolicy;
 
 import org.springframework.security.web.SecurityFilterChain;
-
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import org.springframework.web.cors.CorsConfiguration;
-
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
 import org.springframework.web.filter.CorsFilter;
 
 import java.util.List;
@@ -33,7 +26,7 @@ public class SecurityConfig {
     @Autowired
     private JwtFilter jwtFilter;
 
-    // AUTHENTICATION MANAGER
+    // AUTH MANAGER
     @Bean
     public AuthenticationManager authenticationManager(
 
@@ -43,7 +36,7 @@ public class SecurityConfig {
         return config.getAuthenticationManager();
     }
 
-    // SECURITY FILTER CHAIN
+    // SECURITY FILTER
     @Bean
     public SecurityFilterChain securityFilterChain(
 
@@ -52,13 +45,13 @@ public class SecurityConfig {
 
         http
 
-            // ENABLE CORS
+            // CORS
             .cors(cors -> {})
 
-            // DISABLE CSRF
+            // CSRF OFF
             .csrf(csrf -> csrf.disable())
 
-            // SESSION MANAGEMENT
+            // STATELESS
             .sessionManagement(session ->
 
                 session.sessionCreationPolicy(
@@ -67,12 +60,12 @@ public class SecurityConfig {
                 )
             )
 
-            // AUTHORIZE REQUESTS
+            // AUTHORIZATION
             .authorizeHttpRequests(auth ->
 
                 auth
 
-                    // AUTH APIs
+                    // AUTH
                     .requestMatchers(
 
                         "/api/auth/**"
@@ -80,7 +73,7 @@ public class SecurityConfig {
 
                     .permitAll()
 
-                    // PRODUCT APIs
+                    // PRODUCTS
                     .requestMatchers(
 
                         "/api/products/**"
@@ -88,7 +81,7 @@ public class SecurityConfig {
 
                     .permitAll()
 
-                    // CART APIs
+                    // CART
                     .requestMatchers(
 
                         "/api/cart/**"
@@ -96,7 +89,7 @@ public class SecurityConfig {
 
                     .permitAll()
 
-                    // ORDER APIs
+                    // ORDERS
                     .requestMatchers(
 
                         "/api/orders/**"
@@ -104,7 +97,15 @@ public class SecurityConfig {
 
                     .permitAll()
 
-                    // ANY OTHER REQUEST
+                    // USERS
+                    .requestMatchers(
+
+                        "/api/users/**"
+                    )
+
+                    .permitAll()
+
+                    // ANY OTHER
                     .anyRequest()
 
                     .authenticated()
@@ -121,7 +122,7 @@ public class SecurityConfig {
         return http.build();
     }
 
-    // CORS CONFIGURATION
+    // CORS CONFIG
     @Bean
     public CorsFilter corsFilter() {
 
@@ -135,7 +136,7 @@ public class SecurityConfig {
 
                 List.of(
 
-                        "http://localhost:5173"
+                    "http://localhost:5173"
                 )
         );
 

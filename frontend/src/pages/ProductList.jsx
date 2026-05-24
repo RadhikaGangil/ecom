@@ -6,7 +6,9 @@ import { useNavigate } from "react-router-dom";
 
 import {
     ShoppingCart,
-    Package
+    Package,
+    User,
+    Search
 } from "lucide-react";
 
 function ProductList() {
@@ -40,13 +42,13 @@ function ProductList() {
             setFilteredProducts(response.data);
 
         }
-        catch (error) {
+        catch(error) {
 
             console.log(error);
         }
     };
 
-    // SEARCH PRODUCTS
+    // SEARCH
     const handleSearch = (value) => {
 
         setSearch(value);
@@ -57,7 +59,10 @@ function ProductList() {
 
                 .toLowerCase()
 
-                .includes(value.toLowerCase())
+                .includes(
+
+                    value.toLowerCase()
+                )
         );
 
         setFilteredProducts(filtered);
@@ -86,73 +91,79 @@ function ProductList() {
             alert("Added To Cart 🛒");
 
         }
-        catch (error) {
+        catch(error) {
 
             console.log(error);
+
+            alert("Failed To Add Cart");
         }
     };
 
     return (
 
         <div
-            className="min-vh-100 py-5"
             style={{
-                background: "#f5f5f5"
+                background: "#f6f7fb",
+                minHeight: "100vh"
             }}
         >
 
-            <div className="container">
+            {/* NAVBAR */}
 
-                {/* TOP SECTION */}
+            <nav
+                className="navbar navbar-expand-lg bg-white shadow-sm sticky-top px-4 py-3"
+            >
 
                 <div
-                    className="d-flex justify-content-between align-items-center mb-5"
+                    className="container-fluid"
                 >
 
-                    <h1
-                        className="fw-bold"
+                    <h2
+                        className="fw-bold m-0"
                         style={{
-                            fontSize: "50px"
+                            color: "#111"
                         }}
                     >
 
-                        Trending Products 🔥
+                        ShopEase 🛍️
 
-                    </h1>
+                    </h2>
 
                     <div
                         className="d-flex gap-3"
                     >
 
-                        {/* CART BUTTON */}
-
                         <button
 
-                            className="btn btn-dark px-4 py-2 rounded-pill"
+                            className="btn btn-light rounded-pill px-4"
 
-                            onClick={() => navigate("/cart")}
+                            onClick={() =>
+
+                                navigate("/profile")
+                            }
                         >
 
-                            <ShoppingCart
-                                size={20}
+                            <User
+                                size={18}
                                 className="me-2"
                             />
 
-                            Cart
+                            Profile
 
                         </button>
 
-                        {/* ORDERS BUTTON */}
-
                         <button
 
-                            className="btn btn-success px-4 py-2 rounded-pill"
+                            className="btn btn-light rounded-pill px-4"
 
-                            onClick={() => navigate("/orders")}
+                            onClick={() =>
+
+                                navigate("/orders")
+                            }
                         >
 
                             <Package
-                                size={20}
+                                size={18}
                                 className="me-2"
                             />
 
@@ -160,37 +171,125 @@ function ProductList() {
 
                         </button>
 
+                        <button
+
+                            className="btn btn-dark rounded-pill px-4"
+
+                            onClick={() =>
+
+                                navigate("/cart")
+                            }
+                        >
+
+                            <ShoppingCart
+                                size={18}
+                                className="me-2"
+                            />
+
+                            Cart
+
+                        </button>
+
                     </div>
 
                 </div>
 
-                {/* SEARCH BAR */}
+            </nav>
 
-                <div className="row mb-5">
+            {/* HERO */}
 
-                    <div className="col-md-6 mx-auto">
+            <div
+                className="container mt-4"
+            >
 
-                        <input
+                <div
+                    className="p-5 shadow-lg"
+                    style={{
+                        borderRadius: "30px",
+                        background:
 
-                            type="text"
+                            "linear-gradient(135deg,#111,#333)",
 
-                            placeholder="Search Products..."
+                        color: "white"
+                    }}
+                >
 
-                            className="form-control p-3 shadow-sm"
+                    <h1
+                        className="fw-bold"
+                        style={{
+                            fontSize: "55px"
+                        }}
+                    >
 
-                            style={{
-                                borderRadius: "15px"
-                            }}
+                        Discover Amazing Products ✨
 
-                            value={search}
+                    </h1>
 
-                            onChange={(e) =>
+                    <p
+                        className="mt-3"
+                        style={{
+                            fontSize: "18px"
+                        }}
+                    >
 
-                                handleSearch(e.target.value)
-                            }
-                        />
+                        Shop latest collections with premium quality.
 
-                    </div>
+                    </p>
+
+                </div>
+
+            </div>
+
+            {/* SEARCH */}
+
+            <div
+                className="container mt-5"
+            >
+
+                <div
+                    className="position-relative mb-5"
+                >
+
+                    <Search
+                        size={20}
+                        style={{
+
+                            position: "absolute",
+
+                            top: "18px",
+
+                            left: "18px",
+
+                            color: "gray"
+                        }}
+                    />
+
+                    <input
+
+                        type="text"
+
+                        placeholder="Search products..."
+
+                        className="form-control shadow-sm"
+
+                        style={{
+
+                            borderRadius: "20px",
+
+                            padding:
+
+                                "15px 20px 15px 50px"
+                        }}
+
+                        value={search}
+
+                        onChange={(e) =>
+
+                            handleSearch(
+                                e.target.value
+                            )
+                        }
+                    />
 
                 </div>
 
@@ -200,147 +299,138 @@ function ProductList() {
 
                     {
 
-                        filteredProducts.length === 0
+                        filteredProducts.map((product) => (
 
-                            ?
+                            <div
+                                className="col-md-4 mb-4"
+                                key={product.id}
+                            >
 
-                            (
+                                <div
+                                    className="card border-0 shadow-lg h-100"
+                                    style={{
 
-                                <h2
-                                    className="text-center"
+                                        borderRadius: "25px",
+
+                                        transition:
+
+                                            "0.3s"
+                                    }}
                                 >
 
-                                    No Products Found 😢
+                                    <img
 
-                                </h2>
-                            )
+                                        src={product.imageUrl}
 
-                            :
+                                        alt={product.name}
 
-                            (
+                                        className="card-img-top"
 
-                                filteredProducts.map((product) => (
+                                        style={{
+
+                                            height: "280px",
+
+                                            objectFit:
+
+                                                "cover",
+
+                                            borderTopLeftRadius:
+
+                                                "25px",
+
+                                            borderTopRightRadius:
+
+                                                "25px"
+                                        }}
+                                    />
 
                                     <div
-                                        className="col-md-4 mb-4"
-                                        key={product.id}
+                                        className="card-body p-4"
                                     >
 
-                                        <div
-                                            className="card border-0 shadow-lg h-100"
-                                            style={{
-                                                borderRadius: "25px"
-                                            }}
+                                        <h3
+                                            className="fw-bold"
                                         >
 
-                                            {/* IMAGE */}
+                                            {product.name}
 
-                                            <img
+                                        </h3>
 
-                                                src={product.imageUrl}
+                                        <p
+                                            className="text-muted"
+                                        >
 
-                                                alt={product.name}
+                                            {
+                                                product.description
+                                            }
 
-                                                className="card-img-top"
+                                        </p>
 
-                                                style={{
+                                        <h4
+                                            className="fw-bold text-success"
+                                        >
 
-                                                    height: "300px",
+                                            ₹ {product.price}
 
-                                                    objectFit: "cover",
+                                        </h4>
 
-                                                    borderTopLeftRadius: "25px",
+                                        <small
+                                            className="text-muted"
+                                        >
 
-                                                    borderTopRightRadius: "25px"
-                                                }}
-                                            />
+                                            Stock:
+                                            {" "}
+                                            {
+                                                product.quantity
+                                            }
 
-                                            {/* BODY */}
+                                        </small>
 
-                                            <div className="card-body p-4">
+                                        <div
+                                            className="d-flex gap-2 mt-4"
+                                        >
 
-                                                <h2
-                                                    className="fw-bold"
-                                                >
+                                            <button
 
-                                                    {product.name}
+                                                className="btn btn-outline-dark rounded-pill w-50"
 
-                                                </h2>
+                                                onClick={() =>
 
-                                                <p
-                                                    className="text-muted"
-                                                >
+                                                    navigate(
 
-                                                    {product.description}
+                                                        `/products/${product.id}`
+                                                    )
+                                                }
+                                            >
 
-                                                </p>
+                                                View
 
-                                                <h3
-                                                    className="text-success fw-bold"
-                                                >
+                                            </button>
 
-                                                    ₹ {product.price}
+                                            <button
 
-                                                </h3>
+                                                className="btn btn-dark rounded-pill w-50"
 
-                                                <p>
+                                                onClick={() =>
 
-                                                    Stock:
-                                                    {" "}
-                                                    {product.quantity}
+                                                    addToCart(
+                                                        product
+                                                    )
+                                                }
+                                            >
 
-                                                </p>
+                                                Add Cart
 
-                                                {/* BUTTONS */}
-
-                                                <div
-                                                    className="d-flex gap-2 mt-4"
-                                                >
-
-                                                    {/* VIEW DETAILS */}
-
-                                                    <button
-
-                                                        className="btn btn-outline-dark w-50 rounded-pill"
-
-                                                        onClick={() =>
-
-                                                            navigate(
-
-                                                                `/products/${product.id}`
-                                                            )
-                                                        }
-                                                    >
-
-                                                        View
-
-                                                    </button>
-
-                                                    {/* ADD TO CART */}
-
-                                                    <button
-
-                                                        className="btn btn-dark w-50 rounded-pill"
-
-                                                        onClick={() =>
-
-                                                            addToCart(product)
-                                                        }
-                                                    >
-
-                                                        Add To Cart
-
-                                                    </button>
-
-                                                </div>
-
-                                            </div>
+                                            </button>
 
                                         </div>
 
                                     </div>
-                                ))
-                            )
+
+                                </div>
+
+                            </div>
+                        ))
                     }
 
                 </div>

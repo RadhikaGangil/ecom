@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import axios from "axios";
 
@@ -10,14 +10,8 @@ function CartPage() {
 
     const [cartItems, setCartItems] = useState([]);
 
-    useEffect(() => {
-
-        fetchCartItems();
-
-    }, []);
-
     // FETCH CART ITEMS
-    const fetchCartItems = async () => {
+    const fetchCartItems = useCallback(async () => {
 
         try {
 
@@ -33,7 +27,13 @@ function CartPage() {
 
             console.log(error);
         }
-    };
+    }, []);
+
+    useEffect(() => {
+
+        fetchCartItems();
+
+    }, [fetchCartItems]);
 
     // REMOVE ITEM
     const removeItem = async (id) => {

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import axios from "axios";
 
@@ -12,14 +12,8 @@ function OrdersPage() {
 
     const [orders, setOrders] = useState([]);
 
-    useEffect(() => {
-
-        fetchOrders();
-
-    }, []);
-
     // FETCH ORDERS
-    const fetchOrders = async () => {
+    const fetchOrders = useCallback(async () => {
 
         try {
 
@@ -37,7 +31,13 @@ function OrdersPage() {
 
             console.log(error);
         }
-    };
+    }, []);
+
+    useEffect(() => {
+
+        fetchOrders();
+
+    }, [fetchOrders]);
 
     return (
 

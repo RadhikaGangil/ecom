@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import axios from "axios";
 
@@ -11,13 +11,7 @@ function ProductDetail() {
     const [product, setProduct] =
         useState(null);
 
-    useEffect(() => {
-
-        fetchProduct();
-
-    }, []);
-
-    const fetchProduct = async () => {
+    const fetchProduct = useCallback(async () => {
 
         try {
 
@@ -34,7 +28,13 @@ function ProductDetail() {
 
             console.log(error);
         }
-    };
+    }, [id]);
+
+    useEffect(() => {
+
+        fetchProduct();
+
+    }, [fetchProduct]);
 
     if (!product) {
 

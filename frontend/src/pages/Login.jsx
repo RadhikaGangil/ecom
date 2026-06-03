@@ -1,8 +1,12 @@
 import { useState } from "react";
-
 import axios from "axios";
-
 import { useNavigate } from "react-router-dom";
+import {
+    Mail,
+    Lock,
+    Shield,
+    Heart
+} from "lucide-react";
 
 function Login() {
 
@@ -28,7 +32,9 @@ function Login() {
 
             ...formData,
 
-            [e.target.name]: e.target.value
+            [e.target.name]:
+
+                e.target.value
         });
     };
 
@@ -40,16 +46,30 @@ function Login() {
 
         try {
 
-            const response = await axios.post(
+    const response = await axios.post(
 
-                "http://localhost:8080/api/auth/login",
+        "http://localhost:8080/api/auth/login",
 
-                formData
-            );
-
+        {
+            email: formData.email,
+            password: formData.password,
+            role: formData.role
+        }
+    );
             console.log(response.data);
 
-            // STORE TOKEN
+            if (!response.data.token) {
+
+                setMessage(
+
+                    response.data.role ||
+
+                    "Invalid Credentials"
+                );
+
+                return;
+            }
+
             localStorage.setItem(
 
                 "token",
@@ -57,7 +77,6 @@ function Login() {
                 response.data.token
             );
 
-            // STORE ROLE
             localStorage.setItem(
 
                 "role",
@@ -65,25 +84,36 @@ function Login() {
                 response.data.role
             );
 
-            setMessage("Login Successful");
+            setMessage(
+                "Login Successful 🎉"
+            );
 
-            // ROLE BASED REDIRECT
+            // REDIRECT
 
-            if (response.data.role === "ADMIN") {
+            if (
+
+                response.data.role
+                === "ADMIN"
+
+            ) {
 
                 navigate("/admin");
+            }
 
-            } else {
+            else {
 
                 navigate("/home");
             }
 
         }
-        catch (error) {
+
+        catch(error) {
 
             console.log(error);
 
-            setMessage("Invalid Credentials");
+            setMessage(
+                "Invalid Credentials"
+            );
         }
     };
 
@@ -91,227 +121,483 @@ function Login() {
 
         <div
 
-            className="d-flex justify-content-center align-items-center"
+            className="min-vh-100"
 
             style={{
 
-                minHeight: "100vh",
-
                 backgroundImage:
-                    "url('https://images.unsplash.com/photo-1497366754035-f200968a6e72?q=80&w=2070&auto=format&fit=crop')",
 
-                backgroundSize: "cover",
+                    "url('https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?q=80&w=2070&auto=format&fit=crop')",
 
-                backgroundPosition: "center"
+                backgroundSize:"cover",
+
+                backgroundPosition:"center",
+
+                backgroundRepeat:"no-repeat",
+
+                backgroundColor:
+
+                    "rgba(255,240,245,0.45)",
+
+                backgroundBlendMode:
+
+                    "soft-light",
+
+                overflow:"hidden"
             }}
         >
 
-            <div
+            <div className="container-fluid">
 
-                className="bg-white p-5 shadow"
+                <div className="row min-vh-100">
 
-                style={{
+                    {/* LEFT PANEL */}
 
-                    width: "500px",
+                    <div
 
-                    borderRadius: "30px"
-                }}
-            >
+                        className="col-lg-6 d-none d-lg-flex flex-column justify-content-center px-5"
 
-                <h1
-
-                    className="text-center fw-bold"
-
-                    style={{
-                        fontSize: "70px"
-                    }}
-                >
-
-                    ShopEase
-
-                </h1>
-
-                <h2
-
-                    className="text-center text-muted mb-5"
-                >
-
-                    Welcome Back
-
-                </h2>
-
-                {/* MESSAGE */}
-
-                {
-
-                    message && (
+                    >
 
                         <div
-                            className="alert alert-info"
+                            style={{
+                                maxWidth:"540px"
+                            }}
                         >
 
-                            {message}
+                            <div
+
+                                className="d-inline-flex justify-content-center align-items-center mb-4"
+
+                                style={{
+
+                                    width:"90px",
+
+                                    height:"90px",
+
+                                    borderRadius:"30px",
+
+                                    background:
+
+                                        "linear-gradient(135deg,#ff8fab,#f9a8d4)",
+
+                                    color:"white",
+
+                                    boxShadow:
+
+                                        "0 15px 35px rgba(255,105,180,0.3)"
+                                }}
+                            >
+
+                                <Heart
+                                    size={40}
+                                />
+
+                            </div>
+
+                            <h1
+
+                                className="fw-bold"
+
+                                style={{
+
+                                    fontSize:"72px",
+
+                                    color:"#ec4899"
+                                }}
+                            >
+
+                                MiniNest 🧸
+
+                            </h1>
+
+                            <h3
+
+                                className="mt-3"
+
+                                style={{
+                                    color:"#475569"
+                                }}
+                            >
+
+                                Welcome Back 💖
+
+                            </h3>
+
+                            <p
+
+                                className="mt-4"
+
+                                style={{
+
+                                    color:"#64748b",
+
+                                    lineHeight:"34px",
+
+                                    fontSize:"19px"
+                                }}
+                            >
+
+                                Toys, fashion,
+                                baby care and
+                                magical shopping
+                                for little stars ✨
+
+                            </p>
+
+                            <img
+
+                                src="https://cdn-icons-png.flaticon.com/512/3468/3468377.png"
+
+                                alt="kids"
+
+                                style={{
+
+                                    width:"100%",
+
+                                    maxWidth:"420px",
+
+                                    marginTop:"25px",
+
+                                    filter:
+
+                                        "drop-shadow(0 15px 30px rgba(0,0,0,0.15))"
+                                }}
+                            />
 
                         </div>
-                    )
-                }
-
-                {/* FORM */}
-
-                <form onSubmit={handleSubmit}>
-
-                    {/* EMAIL */}
-
-                    <div className="mb-4">
-
-                        <label
-                            className="fw-bold mb-2"
-                        >
-
-                            Email
-
-                        </label>
-
-                        <input
-
-                            type="email"
-
-                            name="email"
-
-                            className="form-control p-3"
-
-                            placeholder="Enter Email"
-
-                            onChange={handleChange}
-
-                            required
-                        />
 
                     </div>
 
-                    {/* PASSWORD */}
+                    {/* LOGIN CARD */}
 
-                    <div className="mb-4">
+                    <div
 
-                        <label
-                            className="fw-bold mb-2"
-                        >
+                        className="col-lg-6 d-flex justify-content-center align-items-center p-4"
 
-                            Password
-
-                        </label>
-
-                        <input
-
-                            type="password"
-
-                            name="password"
-
-                            className="form-control p-3"
-
-                            placeholder="Enter Password"
-
-                            onChange={handleChange}
-
-                            required
-                        />
-
-                    </div>
-
-                    {/* ROLE */}
-
-                    <div className="mb-4">
-
-                        <label
-                            className="fw-bold mb-2"
-                        >
-
-                            Select Role
-
-                        </label>
-
-                        <select
-
-                            name="role"
-
-                            className="form-control p-3"
-
-                            onChange={handleChange}
-
-                            required
-                        >
-
-                            <option value="">
-
-                                Choose Role
-
-                            </option>
-
-                            <option value="USER">
-
-                                USER
-
-                            </option>
-
-                            <option value="ADMIN">
-
-                                ADMIN
-
-                            </option>
-
-                        </select>
-
-                    </div>
-
-                    {/* LOGIN BUTTON */}
-
-                    <button
-
-                        type="submit"
-
-                        className="btn w-100 p-3 fw-bold"
-
-                        style={{
-
-                            background:
-                                "#131921",
-
-                            color: "white",
-
-                            borderRadius: "15px",
-
-                            fontSize: "22px"
-                        }}
                     >
 
-                        Login
+                        <div
 
-                    </button>
+                            className="card border-0 p-5"
 
-                </form>
+                            style={{
 
-                {/* REGISTER */}
+                                width:"100%",
 
-                <div className="text-center mt-4">
+                                maxWidth:"540px",
 
-                    <p className="text-muted">
+                                borderRadius:"40px",
 
-                        New User?
+                                background:
 
-                    </p>
+                                    "rgba(255,255,255,0.90)",
 
-                    <button
+                                backdropFilter:
 
-                        className="btn btn-outline-dark w-100 p-3"
+                                    "blur(20px)",
 
-                        onClick={() =>
-                            navigate("/register")
-                        }
-                    >
+                                boxShadow:
 
-                        Create Account
+                                    "0 25px 60px rgba(0,0,0,0.18)"
+                            }}
+                        >
 
-                    </button>
+                            <div className="text-center mb-4">
+
+                                <h1
+
+                                    className="fw-bold"
+
+                                    style={{
+
+                                        color:"#ec4899",
+
+                                        fontSize:"42px"
+                                    }}
+                                >
+
+                                    Login to MiniNest 🎀
+
+                                </h1>
+
+                                <p
+                                    className="text-muted"
+                                >
+
+                                    Continue your happy shopping
+
+                                </p>
+
+                            </div>
+
+                            {
+
+                                message && (
+
+                                    <div
+
+                                        className="alert alert-info text-center"
+
+                                        style={{
+                                            borderRadius:"16px"
+                                        }}
+                                    >
+
+                                        {message}
+
+                                    </div>
+                                )
+                            }
+
+                            <form onSubmit={handleSubmit}>
+                                                               {/* EMAIL */}
+
+                                <div className="mb-4">
+
+                                    <label className="fw-semibold mb-2">
+
+                                        Email Address
+
+                                    </label>
+
+                                    <div
+
+                                        className="d-flex align-items-center px-3"
+
+                                        style={{
+
+                                            height:"62px",
+
+                                            border:
+
+                                                "2px solid #bfdbfe",
+
+                                            borderRadius:"18px",
+
+                                            background:"#fff"
+                                        }}
+                                    >
+
+                                        <Mail
+                                            size={20}
+                                            color="#3b82f6"
+                                        />
+
+                                        <input
+
+                                            type="email"
+
+                                            name="email"
+
+                                            placeholder="Enter Email"
+
+                                            className="form-control border-0 bg-transparent shadow-none ms-3"
+
+                                            value={formData.email}
+
+                                            onChange={handleChange}
+
+                                            required
+                                        />
+
+                                    </div>
+
+                                </div>
+
+                                {/* PASSWORD */}
+
+                                <div className="mb-4">
+
+                                    <label className="fw-semibold mb-2">
+
+                                        Password
+
+                                    </label>
+
+                                    <div
+
+                                        className="d-flex align-items-center px-3"
+
+                                        style={{
+
+                                            height:"62px",
+
+                                            border:
+
+                                                "2px solid #ddd6fe",
+
+                                            borderRadius:"18px",
+
+                                            background:"#fff"
+                                        }}
+                                    >
+
+                                        <Lock
+                                            size={20}
+                                            color="#8b5cf6"
+                                        />
+
+                                        <input
+
+                                            type="password"
+
+                                            name="password"
+
+                                            placeholder="Enter Password"
+
+                                            className="form-control border-0 bg-transparent shadow-none ms-3"
+
+                                            value={formData.password}
+
+                                            onChange={handleChange}
+
+                                            required
+                                        />
+
+                                    </div>
+
+                                </div>
+
+                                {/* ROLE */}
+
+                                <div className="mb-4">
+
+                                    <label className="fw-semibold mb-2">
+
+                                        Select Role
+
+                                    </label>
+
+                                    <div
+
+                                        className="d-flex align-items-center px-3"
+
+                                        style={{
+
+                                            height:"62px",
+
+                                            border:
+
+                                                "2px solid #fde68a",
+
+                                            borderRadius:"18px",
+
+                                            background:"#fff"
+                                        }}
+                                    >
+
+                                        <Shield
+                                            size={20}
+                                            color="#f59e0b"
+                                        />
+
+                                        <select
+
+                                            name="role"
+
+                                            className="form-select border-0 bg-transparent shadow-none ms-3"
+
+                                            value={formData.role}
+
+                                            onChange={handleChange}
+
+                                            required
+                                        >
+
+                                            <option value="">
+
+                                                Choose Role
+
+                                            </option>
+
+                                            <option value="USER">
+
+                                                USER
+
+                                            </option>
+
+                                            <option value="ADMIN">
+
+                                                ADMIN
+
+                                            </option>
+
+                                        </select>
+
+                                    </div>
+
+                                </div>
+
+                                {/* LOGIN BUTTON */}
+
+                                <button
+
+                                    type="submit"
+
+                                    className="btn w-100 text-white fw-bold"
+
+                                    style={{
+
+                                        height:"60px",
+
+                                        borderRadius:"20px",
+
+                                        background:
+
+                                            "linear-gradient(135deg,#ec4899,#f472b6)",
+
+                                        border:"none",
+
+                                        fontSize:"18px",
+
+                                        boxShadow:
+
+                                            "0 15px 30px rgba(236,72,153,0.3)"
+                                    }}
+                                >
+
+                                    Login to MiniNest 💖
+
+                                </button>
+
+                            </form>
+
+                            {/* REGISTER */}
+
+                            <p
+
+                                className="text-center mt-4"
+
+                            >
+
+                                New to MiniNest?
+
+                                <span
+
+                                    className="fw-bold ms-2"
+
+                                    style={{
+
+                                        cursor:"pointer",
+
+                                        color:"#ec4899"
+                                    }}
+
+                                    onClick={() =>
+                                        navigate("/register")
+                                    }
+                                >
+
+                                    Create Account
+
+                                </span>
+
+                            </p>
+
+                        </div>
+
+                    </div>
 
                 </div>
 

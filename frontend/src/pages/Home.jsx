@@ -5,7 +5,8 @@ import {
     User,
     Package,
     LogOut,
-    ArrowRight
+    ArrowRight,
+    Heart
 } from "lucide-react";
 
 function Home() {
@@ -22,35 +23,39 @@ function Home() {
     const categories = [
 
         {
-            name: "Fashion",
+
+            name:"Toys 🧸",
 
             image:
 
-                "https://images.unsplash.com/photo-1445205170230-053b83016050"
+            "https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4"
         },
 
         {
-            name: "Electronics",
+
+            name:"Baby Fashion 👕",
 
             image:
 
-                "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9"
+            "https://images.unsplash.com/photo-1519238263530-99bdd11df2ea"
         },
 
         {
-            name: "Watches",
+
+            name:"Baby Care 🍼",
 
             image:
 
-                "https://images.unsplash.com/photo-1523170335258-f5ed11844a49"
+            "https://images.unsplash.com/photo-1544126592-807ade215a0b"
         },
 
         {
-            name: "Laptops",
+
+            name:"School Essentials 🎒",
 
             image:
 
-                "https://images.unsplash.com/photo-1496181133206-80ce9b88a853"
+            "https://images.unsplash.com/photo-1503676260728-1c00da094a0b"
         }
     ];
 
@@ -60,9 +65,13 @@ function Home() {
 
             style={{
 
-                background: "#f8fafc",
+                background:
 
-                minHeight: "100vh"
+                    "#fff7fb",
+
+                minHeight:
+
+                    "100vh"
             }}
         >
 
@@ -70,33 +79,95 @@ function Home() {
 
             <nav
 
-                className="navbar navbar-expand-lg bg-white shadow-sm px-4 py-3 sticky-top"
+                className="navbar navbar-expand-lg sticky-top px-4 py-3"
 
+                style={{
+
+                    background:
+
+                        "rgba(255,255,255,0.88)",
+
+                    backdropFilter:
+
+                        "blur(14px)",
+
+                    boxShadow:
+
+                        "0 10px 30px rgba(0,0,0,0.06)"
+                }}
             >
 
                 <div className="container-fluid">
 
                     {/* LOGO */}
 
-                    <h2
+                    <div
 
-                        className="fw-bold mb-0"
+                        className="d-flex align-items-center"
 
                         style={{
-
-                            color: "#111827",
-
-                            cursor: "pointer"
+                            cursor:"pointer"
                         }}
 
                         onClick={() =>
-                            navigate("/")
+                            navigate("/home")
                         }
                     >
 
-                        ShopEase 🛍️
+                        <div
 
-                    </h2>
+                            className="d-flex justify-content-center align-items-center me-3"
+
+                            style={{
+
+                                width:"52px",
+
+                                height:"52px",
+
+                                borderRadius:"18px",
+
+                                background:
+
+                                    "linear-gradient(135deg,#ff8fab,#f9a8d4)",
+
+                                color:"white"
+                            }}
+                        >
+
+                            <Heart
+                                size={22}
+                            />
+
+                        </div>
+
+                        <div>
+
+                            <h3
+
+                                className="mb-0 fw-bold"
+
+                                style={{
+                                    color:"#ec4899"
+                                }}
+                            >
+
+                                MiniNest 🧸
+
+                            </h3>
+
+                            <small
+                                style={{
+                                    color:"#94a3b8"
+                                }}
+                            >
+
+                                Little Joys ✨
+
+                            </small>
+
+                        </div>
+
+                    </div>
 
                     {/* SEARCH */}
 
@@ -106,26 +177,30 @@ function Home() {
 
                         style={{
 
-                            width: "420px",
+                            width:"420px",
 
-                            height: "48px",
+                            height:"52px",
 
-                            background: "#f1f5f9",
+                            background:"#fff",
 
-                            borderRadius: "14px"
+                            border:
+
+                                "2px solid #fbcfe8",
+
+                            borderRadius:"20px"
                         }}
                     >
 
                         <Search
                             size={18}
-                            color="#64748b"
+                            color="#ec4899"
                         />
 
                         <input
 
                             type="text"
 
-                            placeholder="Search products..."
+                            placeholder="Search toys, fashion, baby care..."
 
                             className="form-control border-0 bg-transparent shadow-none ms-2"
                         />
@@ -138,20 +213,18 @@ function Home() {
 
                         <button
 
-                            className="btn btn-light rounded-pill px-3"
+                            className="btn px-3"
 
-                            onClick={() =>
-                                navigate("/products")
-                            }
-                        >
+                            style={{
 
-                            Shop
+                                borderRadius:"16px",
 
-                        </button>
+                                background:"#fff",
 
-                        <button
+                                border:
 
-                            className="btn btn-light rounded-pill px-3"
+                                    "2px solid #fde68a"
+                            }}
 
                             onClick={() =>
                                 navigate("/orders")
@@ -169,7 +242,18 @@ function Home() {
 
                         <button
 
-                            className="btn btn-light rounded-pill px-3"
+                            className="btn px-3"
+
+                            style={{
+
+                                borderRadius:"16px",
+
+                                background:"#fff",
+
+                                border:
+
+                                    "2px solid #bfdbfe"
+                            }}
 
                             onClick={() =>
                                 navigate("/cart")
@@ -187,7 +271,18 @@ function Home() {
 
                         <button
 
-                            className="btn btn-light rounded-pill px-3"
+                            className="btn px-3"
+
+                            style={{
+
+                                borderRadius:"16px",
+
+                                background:"#fff",
+
+                                border:
+
+                                    "2px solid #ddd6fe"
+                            }}
 
                             onClick={() =>
                                 navigate("/profile")
@@ -205,7 +300,16 @@ function Home() {
 
                         <button
 
-                            className="btn btn-dark rounded-pill px-3"
+                            className="btn text-white px-3"
+
+                            style={{
+
+                                borderRadius:"16px",
+
+                                background:
+
+                                    "linear-gradient(135deg,#ec4899,#f472b6)"
+                            }}
 
                             onClick={logout}
                         >
@@ -231,32 +335,54 @@ function Home() {
 
                 <div
 
-                    className="row align-items-center rounded-5 p-5"
+                    className="row align-items-center p-5"
 
                     style={{
 
+                        borderRadius:"40px",
+
                         background:
 
-                            "linear-gradient(135deg,#111827,#374151)",
-
-                        color: "white"
+                            "linear-gradient(135deg,#ffe4ec,#fdf2f8,#e0f2fe)"
                     }}
                 >
 
                     <div className="col-lg-6">
 
-                        <h1
+                        <span
 
-                            className="fw-bold"
+                            className="px-3 py-2"
 
                             style={{
 
-                                fontSize: "58px"
+                                background:"#fff",
+
+                                borderRadius:"30px",
+
+                                color:"#ec4899",
+
+                                fontWeight:"600"
                             }}
                         >
 
-                            Shop Smart,
-                            Live Better ✨
+                            ✨ Cute Collections for Little Stars
+
+                        </span>
+
+                        <h1
+
+                            className="fw-bold mt-4"
+
+                            style={{
+
+                                fontSize:"64px",
+
+                                color:"#334155"
+                            }}
+                        >
+
+                            Happy Shopping
+                            for Happy Kids 💖
 
                         </h1>
 
@@ -266,30 +392,40 @@ function Home() {
 
                             style={{
 
-                                color: "#d1d5db",
+                                color:"#64748b",
 
-                                fontSize: "18px",
+                                fontSize:"19px",
 
-                                lineHeight: "32px"
+                                lineHeight:"34px"
                             }}
                         >
 
-                            Discover fashion,
-                            gadgets and premium
-                            lifestyle products.
+                            Discover toys,
+                            fashion, baby care
+                            and magical little
+                            essentials.
 
                         </p>
 
                         <button
 
-                            className="btn btn-light rounded-pill px-4 py-3 mt-3 fw-bold"
+                            className="btn text-white px-4 py-3 mt-3 fw-bold"
+
+                            style={{
+
+                                borderRadius:"18px",
+
+                                background:
+
+                                    "linear-gradient(135deg,#ec4899,#f472b6)"
+                            }}
 
                             onClick={() =>
                                 navigate("/products")
                             }
                         >
 
-                            Explore Products
+                            Shop Now
 
                             <ArrowRight
                                 size={18}
@@ -304,39 +440,52 @@ function Home() {
 
                         <img
 
-                            src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b"
+                            src="https://cdn-icons-png.flaticon.com/512/3468/3468377.png"
 
-                            alt="hero"
+                            alt="kids"
 
                             style={{
 
-                                width: "100%",
+                                width:"100%",
 
-                                maxWidth: "500px",
-
-                                borderRadius: "30px",
-
-                                objectFit: "cover",
-
-                                boxShadow:
-
-                                    "0 20px 50px rgba(0,0,0,0.25)"
+                                maxWidth:"500px"
                             }}
                         />
 
                     </div>
 
                 </div>
-
                 {/* CATEGORIES */}
 
                 <div className="mt-5">
 
-                    <h3 className="fw-bold mb-4">
+                    <div className="d-flex justify-content-between align-items-center mb-4">
 
-                        Shop by Category
+                        <h2
 
-                    </h3>
+                            className="fw-bold"
+
+                            style={{
+                                color:"#334155"
+                            }}
+                        >
+
+                            Shop by Category 🧸
+
+                        </h2>
+
+                        <small
+                            style={{
+                                color:"#ec4899",
+                                fontWeight:"600"
+                            }}
+                        >
+
+                            Explore More →
+
+                        </small>
+
+                    </div>
 
                     <div className="row">
 
@@ -348,22 +497,28 @@ function Home() {
 
                                     <div
 
-                                        className="col-md-3 mb-4"
+                                        className="col-lg-3 col-md-6 mb-4"
 
                                         key={index}
                                     >
 
                                         <div
 
-                                            className="card border-0 shadow-sm"
+                                            className="card border-0 h-100"
 
                                             style={{
 
-                                                borderRadius: "25px",
+                                                borderRadius:"30px",
 
-                                                overflow: "hidden",
+                                                overflow:"hidden",
 
-                                                cursor: "pointer"
+                                                background:"#fff",
+
+                                                cursor:"pointer",
+
+                                                boxShadow:
+
+                                                    "0 15px 35px rgba(0,0,0,0.06)"
                                             }}
                                         >
 
@@ -375,7 +530,7 @@ function Home() {
 
                                                 style={{
 
-                                                    height:"180px",
+                                                    height:"220px",
 
                                                     width:"100%",
 
@@ -385,7 +540,14 @@ function Home() {
 
                                             <div className="card-body text-center">
 
-                                                <h5 className="fw-bold">
+                                                <h5
+
+                                                    className="fw-bold"
+
+                                                    style={{
+                                                        color:"#475569"
+                                                    }}
+                                                >
 
                                                     {cat.name}
 
@@ -403,117 +565,200 @@ function Home() {
                     </div>
 
                 </div>
-                {/* FEATURED PRODUCTS */}
+
+                {/* TRENDING PRODUCTS */}
 
                 <div className="mt-5">
 
-                    <h3 className="fw-bold mb-4">
+                    <div className="d-flex justify-content-between align-items-center mb-4">
 
-                        Trending Products 🔥
+                        <h2
 
-                    </h3>
+                            className="fw-bold"
+
+                            style={{
+                                color:"#334155"
+                            }}
+                        >
+
+                            Trending Picks 💖
+
+                        </h2>
+
+                        <small
+                            style={{
+                                color:"#ec4899",
+                                fontWeight:"600"
+                            }}
+                        >
+
+                            View All →
+
+                        </small>
+
+                    </div>
 
                     <div className="row">
 
                         {
 
-                            [1,2,3,4].map((item) => (
+                            [1,2,3,4].map(
 
-                                <div
-                                    className="col-lg-3 col-md-6 mb-4"
-                                    key={item}
-                                >
+                                (item) => (
 
                                     <div
 
-                                        className="card border-0 shadow-sm"
+                                        className="col-lg-3 col-md-6 mb-4"
 
-                                        style={{
-
-                                            borderRadius: "25px",
-
-                                            overflow: "hidden",
-
-                                            transition: "0.3s"
-                                        }}
+                                        key={item}
                                     >
 
-                                        <img
+                                        <div
 
-                                            src={`https://picsum.photos/400/300?random=${item}`}
-
-                                            alt="product"
+                                            className="card border-0 h-100"
 
                                             style={{
 
-                                                height: "220px",
+                                                borderRadius:"30px",
 
-                                                width:"100%",
+                                                overflow:"hidden",
 
-                                                objectFit: "cover"
+                                                background:"#fff",
+
+                                                boxShadow:
+
+                                                    "0 15px 35px rgba(0,0,0,0.06)"
                                             }}
-                                        />
+                                        >
 
-                                        <div className="card-body">
+                                            <img
 
-                                            <h5 className="fw-bold">
+                                                src={`https://picsum.photos/400/320?random=${item}`}
 
-                                                Premium Product
+                                                alt="product"
 
-                                            </h5>
+                                                style={{
 
-                                            <p className="text-muted">
+                                                    height:"240px",
 
-                                                Trending product
-                                                for modern lifestyle.
+                                                    width:"100%",
 
-                                            </p>
+                                                    objectFit:"cover"
+                                                }}
+                                            />
 
-                                            <h5 className="fw-bold">
+                                            <div className="card-body">
 
-                                                ₹999
+                                                <span
 
-                                            </h5>
+                                                    className="px-3 py-2"
 
-                                            <button
+                                                    style={{
 
-                                                className="btn btn-dark w-100 rounded-pill mt-2"
+                                                        background:"#ffe4ec",
 
-                                                onClick={() =>
-                                                    navigate("/products")
-                                                }
-                                            >
+                                                        borderRadius:"20px",
 
-                                                View Product
+                                                        color:"#ec4899",
 
-                                            </button>
+                                                        fontSize:"13px",
+
+                                                        fontWeight:"600"
+                                                    }}
+                                                >
+
+                                                    ⭐ 4.8 Rating
+
+                                                </span>
+
+                                                <h5
+
+                                                    className="fw-bold mt-3"
+
+                                                    style={{
+                                                        color:"#334155"
+                                                    }}
+                                                >
+
+                                                    MiniNest Product
+
+                                                </h5>
+
+                                                <p
+                                                    className="text-muted"
+                                                >
+
+                                                    Cute premium product
+                                                    loved by kids.
+
+                                                </p>
+
+                                                <div className="d-flex justify-content-between align-items-center">
+
+                                                    <h5
+
+                                                        className="fw-bold mb-0"
+
+                                                        style={{
+                                                            color:"#ec4899"
+                                                        }}
+                                                    >
+
+                                                        ₹799
+
+                                                    </h5>
+
+                                                    <button
+
+                                                        className="btn text-white"
+
+                                                        style={{
+
+                                                            borderRadius:"16px",
+
+                                                            background:
+
+                                                                "linear-gradient(135deg,#ec4899,#f472b6)"
+                                                        }}
+
+                                                        onClick={() =>
+                                                            navigate("/products")
+                                                        }
+                                                    >
+
+                                                        View
+
+                                                    </button>
+
+                                                </div>
+
+                                            </div>
 
                                         </div>
 
                                     </div>
-
-                                </div>
-
-                            ))
+                                )
+                            )
                         }
 
                     </div>
 
                 </div>
-
-                {/* OFFER BANNER */}
+                                {/* OFFER BANNER */}
 
                 <div className="mt-5">
 
                     <div
 
-                        className="rounded-5 p-5 text-white"
+                        className="p-5"
 
                         style={{
 
+                            borderRadius:"40px",
+
                             background:
 
-                                "linear-gradient(135deg,#7c3aed,#4f46e5)"
+                                "linear-gradient(135deg,#f9a8d4,#fbcfe8,#fde68a)"
                         }}
                     >
 
@@ -521,41 +766,73 @@ function Home() {
 
                             <div className="col-lg-8">
 
-                                <h1 className="fw-bold">
+                                <span
 
-                                    Mega Sale 50% OFF 🎉
+                                    className="px-3 py-2"
+
+                                    style={{
+
+                                        background:"#fff",
+
+                                        borderRadius:"30px",
+
+                                        color:"#ec4899",
+
+                                        fontWeight:"600"
+                                    }}
+                                >
+
+                                    🎁 Limited Time Offer
+
+                                </span>
+
+                                <h1
+
+                                    className="fw-bold mt-4"
+
+                                    style={{
+                                        color:"#334155"
+                                    }}
+                                >
+
+                                    Up to 50% OFF
+                                    on Kids Collection 💖
 
                                 </h1>
 
                                 <p
+
                                     className="mt-3"
+
                                     style={{
-                                        color:"#e0e7ff"
+                                        color:"#475569",
+                                        fontSize:"18px"
                                     }}
                                 >
 
-                                    Limited deals on
-                                    fashion, electronics
+                                    Toys, baby fashion,
+                                    school essentials
                                     and more.
 
                                 </p>
 
                             </div>
 
-                            <div className="col-lg-4 text-lg-end">
+                            <div className="col-lg-4 text-center">
 
-                                <button
+                                <img
 
-                                    className="btn btn-light rounded-pill px-4 py-3 fw-bold"
+                                    src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png"
 
-                                    onClick={() =>
-                                        navigate("/products")
-                                    }
-                                >
+                                    alt="offer"
 
-                                    Shop Now
+                                    style={{
 
-                                </button>
+                                        width:"100%",
+
+                                        maxWidth:"260px"
+                                    }}
+                                />
 
                             </div>
 
@@ -565,69 +842,110 @@ function Home() {
 
                 </div>
 
-                {/* WHY CHOOSE US */}
+                {/* WHY MININEST */}
 
                 <div className="mt-5">
 
-                    <h3 className="fw-bold text-center mb-5">
+                    <h2
 
-                        Why Shop With Us
+                        className="fw-bold text-center mb-5"
 
-                    </h3>
+                        style={{
+                            color:"#334155"
+                        }}
+                    >
 
-                    <div className="row text-center">
+                        Why Parents Love MiniNest ✨
+
+                    </h2>
+
+                    <div className="row">
 
                         <div className="col-md-4 mb-4">
 
                             <div
 
-                                className="card border-0 shadow-sm p-4"
+                                className="card border-0 p-4 h-100 text-center"
 
                                 style={{
-                                    borderRadius:"25px"
+
+                                    borderRadius:"30px",
+
+                                    background:"#fff",
+
+                                    boxShadow:
+
+                                        "0 15px 35px rgba(0,0,0,0.06)"
+                                }}
+                            >
+
+                                <h1>🧸</h1>
+
+                                <h4
+
+                                    className="fw-bold mt-3"
+
+                                    style={{
+                                        color:"#334155"
+                                    }}
+                                >
+
+                                    Premium Toys
+
+                                </h4>
+
+                                <p
+                                    className="text-muted"
+                                >
+
+                                    Safe and adorable
+                                    products for kids.
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        <div className="col-md-4 mb-4">
+
+                            <div
+
+                                className="card border-0 p-4 h-100 text-center"
+
+                                style={{
+
+                                    borderRadius:"30px",
+
+                                    background:"#fff",
+
+                                    boxShadow:
+
+                                        "0 15px 35px rgba(0,0,0,0.06)"
                                 }}
                             >
 
                                 <h1>🚚</h1>
 
-                                <h5 className="fw-bold">
+                                <h4
+
+                                    className="fw-bold mt-3"
+
+                                    style={{
+                                        color:"#334155"
+                                    }}
+                                >
 
                                     Fast Delivery
 
-                                </h5>
+                                </h4>
 
-                                <p className="text-muted">
+                                <p
+                                    className="text-muted"
+                                >
 
-                                    Quick and safe shipping.
-
-                                </p>
-
-                            </div>
-
-                        </div>
-
-                        <div className="col-md-4 mb-4">
-
-                            <div
-
-                                className="card border-0 shadow-sm p-4"
-
-                                style={{
-                                    borderRadius:"25px"
-                                }}
-                            >
-
-                                <h1>🔒</h1>
-
-                                <h5 className="fw-bold">
-
-                                    Secure Payments
-
-                                </h5>
-
-                                <p className="text-muted">
-
-                                    Trusted payment gateway.
+                                    Quick shipping for
+                                    happy little smiles.
 
                                 </p>
 
@@ -639,24 +957,41 @@ function Home() {
 
                             <div
 
-                                className="card border-0 shadow-sm p-4"
+                                className="card border-0 p-4 h-100 text-center"
 
                                 style={{
-                                    borderRadius:"25px"
+
+                                    borderRadius:"30px",
+
+                                    background:"#fff",
+
+                                    boxShadow:
+
+                                        "0 15px 35px rgba(0,0,0,0.06)"
                                 }}
                             >
 
-                                <h1>⭐</h1>
+                                <h1>💖</h1>
 
-                                <h5 className="fw-bold">
+                                <h4
 
-                                    Premium Quality
+                                    className="fw-bold mt-3"
 
-                                </h5>
+                                    style={{
+                                        color:"#334155"
+                                    }}
+                                >
 
-                                <p className="text-muted">
+                                    Trusted by Parents
 
-                                    Best curated products.
+                                </h4>
+
+                                <p
+                                    className="text-muted"
+                                >
+
+                                    Loved by thousands
+                                    of happy families.
 
                                 </p>
 
@@ -674,10 +1009,13 @@ function Home() {
 
             <footer
 
-                className="text-white mt-5"
+                className="mt-5 text-white"
 
                 style={{
-                    background:"#111827"
+
+                    background:
+
+                        "linear-gradient(135deg,#ec4899,#f472b6)"
                 }}
             >
 
@@ -687,19 +1025,18 @@ function Home() {
 
                         <div className="col-md-4">
 
-                            <h4 className="fw-bold">
+                            <h2 className="fw-bold">
 
-                                ShopEase 🛍️
+                                MiniNest 🧸
 
-                            </h4>
+                            </h2>
 
                             <p
-                                style={{
-                                    color:"#9ca3af"
-                                }}
+                                className="mt-3"
                             >
 
-                                Modern ecommerce experience.
+                                Cute shopping destination
+                                for happy little stars ✨
 
                             </p>
 
@@ -707,53 +1044,68 @@ function Home() {
 
                         <div className="col-md-4">
 
-                            <h5>
+                            <h5 className="fw-bold">
 
                                 Quick Links
 
                             </h5>
 
-                            <p>Home</p>
+                            <p className="mt-3">
 
-                            <p>Products</p>
+                                Home
 
-                            <p>Orders</p>
+                            </p>
+
+                            <p>
+
+                                Products
+
+                            </p>
+
+                            <p>
+
+                                Orders
+
+                            </p>
 
                         </div>
 
                         <div className="col-md-4">
 
-                            <h5>
+                            <h5 className="fw-bold">
 
-                                Contact
+                                Support
 
                             </h5>
 
-                            <p>Email Support</p>
+                            <p className="mt-3">
 
-                            <p>Help Center</p>
+                                Help Center
+
+                            </p>
+
+                            <p>
+
+                                Contact Us
+
+                            </p>
+
+                            <p>
+
+                                Privacy Policy
+
+                            </p>
 
                         </div>
 
                     </div>
 
-                    <hr
-                        style={{
-                            borderColor:"#374151"
-                        }}
-                    />
+                    <hr />
 
-                    <p
+                    <p className="text-center mb-0">
 
-                        className="text-center mb-0"
-
-                        style={{
-                            color:"#9ca3af"
-                        }}
-                    >
-
-                        © 2026 ShopEase.
-                        All Rights Reserved.
+                        © 2026 MiniNest.
+                        All Rights Reserved 💖
 
                     </p>
 

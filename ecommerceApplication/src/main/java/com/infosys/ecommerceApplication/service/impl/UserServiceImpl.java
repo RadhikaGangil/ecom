@@ -14,9 +14,7 @@ import com.infosys.ecommerceApplication.security.JwtUtil;
 import com.infosys.ecommerceApplication.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.security.crypto.password.PasswordEncoder;
-
 import org.springframework.stereotype.Service;
 
 @Service
@@ -37,6 +35,13 @@ public class UserServiceImpl
     public String registerUser(
             RegisterRequest request) {
 
+        // EMAIL EXISTS CHECK
+        if (userRepository.findByEmail(
+                request.getEmail()).isPresent()) {
+
+            return "Email Already Registered";
+        }
+
         User user = new User();
 
         // NAME
@@ -54,8 +59,23 @@ public class UserServiceImpl
                         request.getPassword()));
 
         // ROLE
-        user.setRole(
-                Role.USER);
+        Role role = Role.USER;
+
+        if (request.getRole() != null
+                && !request.getRole().isBlank()) {
+
+            try {
+
+                role = Role.valueOf(
+                        request.getRole().toUpperCase());
+
+            } catch (IllegalArgumentException ex) {
+
+                return "Invalid Role";
+            }
+        }
+
+        user.setRole(role);
 
         // SAVE USER
         userRepository.save(user);
@@ -93,10 +113,14 @@ public class UserServiceImpl
                     "INVALID PASSWORD");
         }
 
+        // GENERATE JWT TOKEN
+        String token = jwtUtil.generateToken(
+                user.getEmail());
+
         // SUCCESS
         return new LoginResponse(
 
-                "LOGIN_SUCCESS",
+                token,
 
                 user.getRole().name());
     }

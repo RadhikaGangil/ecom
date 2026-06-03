@@ -20,4 +20,7 @@ public interface ProductService {
 
     // Filter Products By Price
     List<Product> filterProductsByPrice(double price);
+
+    // Delete Product
+    void deleteProduct(Long id);
 }

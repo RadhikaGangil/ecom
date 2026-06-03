@@ -58,4 +58,11 @@ public class ProductServiceImpl
                 .findByPriceLessThanEqual(
                         price);
     }
+
+    // Delete Product
+    @Override
+    public void deleteProduct(Long id) {
+
+        productRepository.deleteById(id);
+    }
 }

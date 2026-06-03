@@ -10,7 +10,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/products")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = {
+        "http://localhost:5173",
+        "http://127.0.0.1:5173"
+})
 
 public class ProductController {
 
@@ -18,8 +21,16 @@ public class ProductController {
     private ProductService productService;
 
     // Add Product
-    @PostMapping("/add")
+    @PostMapping
     public Product addProduct(
+            @RequestBody Product product) {
+
+        return productService.addProduct(product);
+    }
+
+    // Backward compatible endpoint
+    @PostMapping("/add")
+    public Product addProductLegacy(
             @RequestBody Product product) {
 
         return productService.addProduct(product);
@@ -54,5 +65,15 @@ public class ProductController {
             @RequestParam double price) {
 
         return productService.filterProductsByPrice(price);
+    }
+
+    // Delete Product
+    @DeleteMapping("/{id}")
+    public String deleteProduct(
+            @PathVariable Long id) {
+
+        productService.deleteProduct(id);
+
+        return "Product Deleted Successfully";
     }
 }

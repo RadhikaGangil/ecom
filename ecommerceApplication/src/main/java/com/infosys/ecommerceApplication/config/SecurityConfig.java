@@ -15,8 +15,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
 
 import java.util.List;
 
@@ -27,107 +27,23 @@ public class SecurityConfig {
     private JwtFilter jwtFilter;
 
     // AUTH MANAGER
+
     @Bean
     public AuthenticationManager authenticationManager(
 
             AuthenticationConfiguration config
+
     ) throws Exception {
 
         return config.getAuthenticationManager();
     }
 
-    // SECURITY FILTER
+    // CORS CONFIGURATION
+
     @Bean
-    public SecurityFilterChain securityFilterChain(
-
-            HttpSecurity http
-    ) throws Exception {
-
-        http
-
-            // CORS
-            .cors(cors -> {})
-
-            // CSRF OFF
-            .csrf(csrf -> csrf.disable())
-
-            // STATELESS
-            .sessionManagement(session ->
-
-                session.sessionCreationPolicy(
-
-                    SessionCreationPolicy.STATELESS
-                )
-            )
-
-            // AUTHORIZATION
-            .authorizeHttpRequests(auth ->
-
-                auth
-
-                    // AUTH
-                    .requestMatchers(
-
-                        "/api/auth/**"
-                    )
-
-                    .permitAll()
-
-                    // PRODUCTS
-                    .requestMatchers(
-
-                        "/api/products/**"
-                    )
-
-                    .permitAll()
-
-                    // CART
-                    .requestMatchers(
-
-                        "/api/cart/**"
-                    )
-
-                    .permitAll()
-
-                    // ORDERS
-                    .requestMatchers(
-
-                        "/api/orders/**"
-                    )
-
-                    .permitAll()
-
-                    // USERS
-                    .requestMatchers(
-
-                        "/api/users/**"
-                    )
-
-                    .permitAll()
-
-                    // ANY OTHER
-                    .anyRequest()
-
-                    .authenticated()
-            )
-
-            // JWT FILTER
-            .addFilterBefore(
-
-                jwtFilter,
-
-                UsernamePasswordAuthenticationFilter.class
-            );
-
-        return http.build();
-    }
-
-    // CORS CONFIG
-    @Bean
-    public CorsFilter corsFilter() {
+    public CorsConfigurationSource corsConfigurationSource() {
 
         CorsConfiguration configuration =
-
                 new CorsConfiguration();
 
         configuration.setAllowCredentials(true);
@@ -136,7 +52,9 @@ public class SecurityConfig {
 
                 List.of(
 
-                    "http://localhost:5173"
+                        "http://localhost:5173",
+
+                        "http://127.0.0.1:5173"
                 )
         );
 
@@ -147,11 +65,17 @@ public class SecurityConfig {
 
         configuration.setAllowedMethods(
 
-                List.of("*")
+                List.of(
+
+                        "GET",
+                        "POST",
+                        "PUT",
+                        "DELETE",
+                        "OPTIONS"
+                )
         );
 
         UrlBasedCorsConfigurationSource source =
-
                 new UrlBasedCorsConfigurationSource();
 
         source.registerCorsConfiguration(
@@ -161,6 +85,111 @@ public class SecurityConfig {
                 configuration
         );
 
-        return new CorsFilter(source);
+        return source;
+    }
+
+    // SECURITY FILTER
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(
+
+            HttpSecurity http
+
+    ) throws Exception {
+
+        http
+
+            // CORS ENABLE
+
+            .cors(cors ->
+
+                    cors.configurationSource(
+
+                            corsConfigurationSource()
+                    )
+            )
+
+            // CSRF OFF
+
+            .csrf(csrf -> csrf.disable())
+
+            // STATELESS
+
+            .sessionManagement(session ->
+
+                    session.sessionCreationPolicy(
+
+                            SessionCreationPolicy.STATELESS
+                    )
+            )
+
+            // AUTHORIZATION
+
+            .authorizeHttpRequests(auth ->
+
+                    auth
+
+                            // AUTH
+
+                            .requestMatchers(
+
+                                    "/api/auth/**"
+                            )
+
+                            .permitAll()
+
+                            // PRODUCTS
+
+                            .requestMatchers(
+
+                                    "/api/products/**"
+                            )
+
+                            .permitAll()
+
+                            // CART
+
+                            .requestMatchers(
+
+                                    "/api/cart/**"
+                            )
+
+                            .permitAll()
+
+                            // ORDERS
+
+                            .requestMatchers(
+
+                                    "/api/orders/**"
+                            )
+
+                            .permitAll()
+
+                            // USERS
+
+                            .requestMatchers(
+
+                                    "/api/users/**"
+                            )
+
+                            .permitAll()
+
+                            // ANY OTHER
+
+                            .anyRequest()
+
+                            .authenticated()
+            )
+
+            // JWT FILTER
+
+            .addFilterBefore(
+
+                    jwtFilter,
+
+                    UsernamePasswordAuthenticationFilter.class
+            );
+
+        return http.build();
     }
 }

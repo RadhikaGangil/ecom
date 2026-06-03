@@ -113,6 +113,16 @@ public class UserServiceImpl
                     "INVALID PASSWORD");
         }
 
+        if (request.getRole() != null
+                && !request.getRole().isBlank()
+                && !user.getRole().name().equalsIgnoreCase(
+                        request.getRole())) {
+
+            return new LoginResponse(
+                    null,
+                    "ROLE DOES NOT MATCH");
+        }
+
         // GENERATE JWT TOKEN
         String token = jwtUtil.generateToken(
                 user.getEmail());

@@ -21,8 +21,7 @@ function Login() {
         role: ""
     });
 
-    const [message, setMessage] =
-        useState("");
+    const [message, setMessage] = useState("");
 
     // HANDLE CHANGE
 
@@ -46,16 +45,16 @@ function Login() {
 
         try {
 
-    const response = await axios.post(
+            const response = await axios.post(
 
-        "http://localhost:8080/api/auth/login",
+                "http://localhost:8080/api/auth/login",
 
-        {
-            email: formData.email,
-            password: formData.password,
-            role: formData.role
-        }
-    );
+                {
+                    email: formData.email.trim(),
+                    password: formData.password,
+                    role: formData.role
+                }
+            );
             console.log(response.data);
 
             if (!response.data.token) {
@@ -64,7 +63,7 @@ function Login() {
 
                     response.data.role ||
 
-                    "Invalid Credentials"
+                    "Invalid credentials"
                 );
 
                 return;
@@ -84,9 +83,7 @@ function Login() {
                 response.data.role
             );
 
-            setMessage(
-                "Login Successful 🎉"
-            );
+            setMessage("Login successful");
 
             // REDIRECT
 
@@ -111,9 +108,24 @@ function Login() {
 
             console.log(error);
 
-            setMessage(
-                "Invalid Credentials"
-            );
+            if (
+                error.response &&
+                error.response.data
+            ) {
+
+                setMessage(
+
+                    typeof error.response.data === "string"
+                        ? error.response.data
+                        : error.response.data.role ||
+                            error.response.data.message ||
+                            "Invalid credentials"
+                );
+
+                return;
+            }
+
+            setMessage("Server not reachable");
         }
     };
 
@@ -207,7 +219,7 @@ function Login() {
                                 }}
                             >
 
-                                MiniNest 🧸
+                                MiniNest
 
                             </h1>
 
@@ -220,7 +232,7 @@ function Login() {
                                 }}
                             >
 
-                                Welcome Back 💖
+                                Welcome Back
 
                             </h3>
 
@@ -241,7 +253,7 @@ function Login() {
                                 Toys, fashion,
                                 baby care and
                                 magical shopping
-                                for little stars ✨
+                                for little stars.
 
                             </p>
 
@@ -317,7 +329,7 @@ function Login() {
                                     }}
                                 >
 
-                                    Login to MiniNest 🎀
+                                    Login to MiniNest
 
                                 </h1>
 
@@ -557,7 +569,7 @@ function Login() {
                                     }}
                                 >
 
-                                    Login to MiniNest 💖
+                                    Login to MiniNest
 
                                 </button>
 

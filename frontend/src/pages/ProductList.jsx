@@ -27,7 +27,7 @@ function ProductList() {
 
             const response = await axios.get(
 
-                "http://localhost:8080/api/products"
+                "/api/products"
             );
 
             setProducts(response.data);
@@ -75,7 +75,7 @@ function ProductList() {
 
             await axios.post(
 
-                "http://localhost:8080/api/cart",
+                "/api/cart",
 
                 {
 

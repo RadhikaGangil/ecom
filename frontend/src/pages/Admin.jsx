@@ -29,7 +29,7 @@ function Admin() {
 
             const response = await axios.get(
 
-                "http://localhost:8080/api/products"
+                "/api/products"
             );
 
             setProducts(response.data);
@@ -73,7 +73,7 @@ function Admin() {
 
             const response = await axios.post(
 
-                "http://localhost:8080/api/products",
+                "/api/products",
 
                 {
                     name: name,
@@ -118,7 +118,7 @@ function Admin() {
 
             await axios.delete(
 
-                `http://localhost:8080/api/products/${id}`
+                `/api/products/${id}`
             );
 
             alert("Product Deleted ❌");

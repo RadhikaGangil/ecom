@@ -54,7 +54,7 @@ function ProfilePage() {
             const response =
                 await axios.get(
 
-                    "http://localhost:8080/api/users/1"
+                    "/api/users/1"
                 );
 
             const user =
@@ -93,7 +93,7 @@ function ProfilePage() {
 
             await axios.put(
 
-                "http://localhost:8080/api/users/1",
+                "/api/users/1",
 
                 {
 

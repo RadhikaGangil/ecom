@@ -28,7 +28,7 @@ function OrdersPage() {
             const response =
                 await axios.get(
 
-                    "http://localhost:8080/api/orders"
+                    "/api/orders"
                 );
 
             setOrders(

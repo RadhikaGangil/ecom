@@ -62,7 +62,7 @@ function CheckoutPage() {
             const response =
                 await axios.get(
 
-                    "http://localhost:8080/api/cart"
+                    "/api/cart"
                 );
 
             setCartItems(
@@ -142,7 +142,7 @@ function CheckoutPage() {
 
                         await axios.post(
 
-                            "http://localhost:8080/api/orders",
+                            "/api/orders",
 
                             {
 
@@ -182,7 +182,7 @@ function CheckoutPage() {
 
             await axios.post(
 
-                "http://localhost:8080/api/orders",
+                "/api/orders",
 
                 {
 

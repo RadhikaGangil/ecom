@@ -26,7 +26,7 @@ function CartPage() {
             const response =
                 await axios.get(
 
-                    "http://localhost:8080/api/cart"
+                    "/api/cart"
                 );
 
             setCartItems(
@@ -57,7 +57,7 @@ function CartPage() {
 
             await axios.delete(
 
-                `http://localhost:8080/api/cart/${id}`
+                `/api/cart/${id}`
             );
 
             alert(
@@ -94,7 +94,7 @@ function CartPage() {
 
             await axios.put(
 
-                `http://localhost:8080/api/cart/${item.id}`,
+                `/api/cart/${item.id}`,
 
                 {
 

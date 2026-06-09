@@ -10,11 +10,11 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.time.Duration;
 
-public class LoginTest {
+public class InvalidLoginTest {
 
     public static void main(String[] args) {
 
-        System.out.println("Test Started...");
+        System.out.println("Invalid Login Test Started...");
 
         WebDriverManager.chromedriver().setup();
 
@@ -32,59 +32,38 @@ public class LoginTest {
 
             System.out.println("Step 1 ✅ Login Page Opened");
 
-            Thread.sleep(2000);
+            // Wrong Email
+            driver.findElement(
+                    By.name("email"))
+                    .sendKeys("wrong@gmail.com");
 
-            // Email
-            WebElement email =
-                    driver.findElement(
-                            By.name("email"));
+            System.out.println("Step 2 ✅ Wrong Email Entered");
 
-            email.sendKeys(
-                    "radhikagangil76@gmail.com");
+            // Wrong Password
+            driver.findElement(
+                    By.name("password"))
+                    .sendKeys("wrong123");
 
-            System.out.println("Step 2 ✅ Email Entered");
-
-            // Password
-            WebElement password =
-                    driver.findElement(
-                            By.name("password"));
-
-            password.sendKeys(
-                    "Radhika@123");
-
-            System.out.println("Step 3 ✅ Password Entered");
+            System.out.println("Step 3 ✅ Wrong Password Entered");
 
             // Role
-            WebElement role =
-                    driver.findElement(
-                            By.name("role"));
-
-            role.sendKeys("USER");
+            driver.findElement(
+                    By.name("role"))
+                    .sendKeys("USER");
 
             System.out.println("Step 4 ✅ Role Selected");
 
             // Login Button
             WebElement loginButton =
                     driver.findElement(
-                            By.cssSelector(
-                                    "button[type='submit']"));
+                            By.cssSelector("button[type='submit']"));
 
-            // Scroll to button
-            ((JavascriptExecutor) driver)
-                    .executeScript(
-                            "arguments[0].scrollIntoView(true);",
-                            loginButton);
-
-            Thread.sleep(1000);
-
-            // JS Click
             ((JavascriptExecutor) driver)
                     .executeScript(
                             "arguments[0].click();",
                             loginButton);
 
-            System.out.println(
-                    "Step 5 ✅ Login Button Clicked");
+            System.out.println("Step 5 ✅ Login Button Clicked");
 
             Thread.sleep(5000);
 
@@ -94,19 +73,33 @@ public class LoginTest {
             System.out.println(
                     "Current URL : " + currentUrl);
 
-            if(currentUrl.contains("home")) {
+            // Verify Invalid Login
+            if(currentUrl.contains("login")) {
 
                 System.out.println(
-                        "USER LOGIN SUCCESSFUL ✅");
+                        "INVALID LOGIN TEST PASSED ✅");
 
             } else {
 
                 System.out.println(
-                        "USER LOGIN FAILED ❌");
+                        "INVALID LOGIN TEST FAILED ❌");
+            }
+
+            // Error Message Validation
+            String pageSource =
+                    driver.getPageSource();
+
+            if(pageSource.contains("Invalid")
+                    || pageSource.contains("USER NOT FOUND")
+                    || pageSource.contains("PASSWORD")
+                    || pageSource.contains("credentials")) {
+
+                System.out.println(
+                        "Error Message Displayed ✅");
             }
 
             System.out.println(
-                    "T072 COMPLETED SUCCESSFULLY 🎉");
+                    "T073 COMPLETED SUCCESSFULLY 🎉");
 
         }
 
